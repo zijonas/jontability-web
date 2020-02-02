@@ -1,0 +1,16 @@
+.header {
+    height: 3rem;
+    
+    .title {
+        position: relative;
+        left: calc(50% - 5rem);
+        font-size: 2rem;
+        color: #8854d0;
+        width: 10rem;
+        font-weight: bolder;
+    }
+
+    a {
+        text-decoration: none;
+    }
+}

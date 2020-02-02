@@ -1,0 +1,15 @@
+
+.item {
+    display: flex;
+    align-items: center;
+
+    .text {
+        width: 10rem;
+        padding-left: 1rem;
+        font-size: 2rem;
+
+        &.number {
+            text-align: right;
+        }
+    }
+}

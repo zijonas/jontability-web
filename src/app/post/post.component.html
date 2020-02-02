@@ -1,0 +1,32 @@
+<h2 class="page-title">Lançamentos para {{selectedDate | date : 'MMMM y'}} Total - {{sum}}</h2>
+
+<div class="box-container"></div>
+<div class="middle-box">
+  <form class="addPostForm" action="#" method="POST">
+    <input [(ngModel)]="post.invoice" type="checkbox" name="invoice" />
+    <select [(ngModel)]="post.categoryId" [ngModelOptions]="{standalone: true}">
+      <option *ngFor="let c of categories" [ngValue]="c.id">{{c.name}}</option>
+    </select>
+    <select [(ngModel)]="post.accountId" [ngModelOptions]="{standalone: true}" >
+      <option *ngFor="let a of accounts" [ngValue]="a.id">{{a.name}}</option>
+    </select>
+    <input [(ngModel)]="post.description" placeholder="Observação" type="text" name="description" />
+    <input [(ngModel)]="day" placeholder="Dia do mês" type="number" name="day" />
+    <input [(ngModel)]="post.value" placeholder="Valor" type="number" name="value" />
+    <button (click)="add()" value="Add">Gravar</button>
+  </form>
+</div>
+<div>
+  <div *ngFor="let post of posts">
+    <div class="item">
+      <button class="delete" (click)="delete(post.id)" value="Delete">X</button>
+      <button class="edit" (click)="delete(post.id)" value="Edit">E</button>
+      <button class="copy" (click)="delete(post.id)" value="Copy">C</button>
+      <div class="text">{{post.date | date : 'dd.MM'}}</div>
+      <div class="text">{{categoryName(post.categoryId)}}</div>
+      <div class="text">{{post.description}}</div>
+      <div class="text">{{accountName(post.accountId)}}</div>
+      <div class="text number">{{post.value | number : '1.2'}}</div>
+    </div>
+  </div>
+</div>

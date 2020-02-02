@@ -1,0 +1,21 @@
+<h2 class="page-title">Account</h2>
+
+<div class="middle-box">
+  <select [(ngModel)]="account">
+    <option *ngFor="let a of accounts" [ngValue]="a">{{a.name}}</option>
+  </select>
+  <form class="addAccountForm" action="#" method="POST">
+    <input [(ngModel)]="account.name" placeholder="Account name" type="string" name="name" />
+    <input [(ngModel)]="account.type" placeholder="Account type" type="string" name="type" />
+    <button (click)="add()" value="Add">Submit</button>
+  </form>
+  
+  <ul>
+    <li *ngFor="let acc of accounts">
+      <div class="item">
+        <button (click)="delete(acc.id)" value="Delete">X</button>
+        <div class="desc">{{acc.name}}</div>
+      </div>
+    </li>
+  </ul>
+</div>

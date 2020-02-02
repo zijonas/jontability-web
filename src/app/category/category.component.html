@@ -1,0 +1,20 @@
+<h2 class="page-title">Categoria</h2>
+
+<div class="middle-box">
+  <select [(ngModel)]="category">
+    <option *ngFor="let c of categories" [ngValue]="c">{{c.name}}</option>
+  </select>
+  <form class="addCategorieForm" action="#" method="POST">
+    <input [(ngModel)]="category.name" placeholder="Category name" type="text" name="name" />
+    <button (click)="add()" value="Add">Save</button>
+  </form>
+  
+  <ul>
+    <li *ngFor="let cat of categories">
+      <div class="item">
+        <button (click)="remove(cat.id)" value="Delete">X</button>
+        <div class="desc">{{cat.name}}</div>
+      </div>
+    </li>
+  </ul>
+</div>
