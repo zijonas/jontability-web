@@ -16,26 +16,20 @@ export class CategoryComponent implements OnInit {
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
-    this.categoryService.register(this.reloadCategories.bind(this));
-  }
-
-  onSelect(item: Category) {
-    console.log(item);
-    // this.category = item;
+    this.categoryService.register(this.loadCategories.bind(this));
   }
 
   add() {
-    this.categoryService.addItem(this.category);
+    this.categoryService.add(this.category);
     this.category = new Category();
   }
 
-  reloadCategories() {
-    this.categoryService.loadAll()
-    .subscribe(cat => this.categories = cat);
+  loadCategories(categories: Category[]) {
+    this.categories = categories;
   }
 
   remove(id: number) {
-    this.categoryService.removeItem(id);
+    this.categoryService.delete(id);
   }
 
 }

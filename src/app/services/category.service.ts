@@ -12,29 +12,36 @@ export class CategoryService {
   
   serverUrl = 'http://localhost:8080/restapi/category';
 
-  categories: Observable<Category[]>;
+  categories: Category[];
   observers = [];
 
-
-  loadAll(): Observable<Category[]> {
-    this.categories = this.httpClient.get<Category[]>(this.serverUrl);
-    return this.categories;
-
+  
+  delete(id: number) {
+    this.httpClient.delete(this.serverUrl + '/' + id)
+    .subscribe(() => {
+      this.loadAll();
+    });
   }
-
-  removeItem(id: number) {
-    this.httpClient.delete(this.serverUrl + '/' + id).toPromise()
-    .then(this.notifyAll.bind(this));
+  
+  add(category: Category) {
+    this.httpClient.post<Category>(this.serverUrl, category)
+    .subscribe((category) => {
+      this.categories.push(category);
+      this.notifyAll.bind(this)
+    });
   }
-
-  addItem(category: Category) {
-    this.httpClient.post(this.serverUrl, category).toPromise()
-    .then(this.notifyAll.bind(this));
-  }
-
-  register(observer: (observable: Observable<Category[]>) => void) {
+  
+  register(observer: (observable: Category[]) => void) {
     this.observers.push(observer);
-    observer(this.loadAll());
+    observer(this.categories);
+  }
+  
+  private loadAll() {
+    this.httpClient.get<Category[]>(this.serverUrl)
+      .subscribe((categories) => {
+        this.categories = categories;
+        this.notifyAll();
+      });
   }
 
   private notifyAll(){
