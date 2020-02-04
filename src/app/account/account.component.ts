@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../services/account.service';
-import { Observable } from 'rxjs';
 import { Account } from './account';
 
 @Component({
@@ -16,11 +15,7 @@ export class AccountComponent implements OnInit {
   account: Account = new Account();
 
   ngOnInit() {
-    this.accountService.register(this.load.bind(this));
-  }
-
-  load(observable: Observable<Account[]>) {
-    observable.subscribe(acc => this.accounts = acc);
+    this.accountService.register(((acc: Account[]) => this.accounts = acc).bind(this));
   }
 
   add() {

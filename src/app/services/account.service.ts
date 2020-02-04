@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { Account } from '../account/account';
 
 @Injectable({
@@ -10,29 +9,47 @@ export class AccountService {
 
   constructor(private httpClient: HttpClient) { }
 
-  accounts: Observable<Account[]>;
+  private serverUrl = 'http://localhost:8080/account'
+  
+  accounts: Account[];
   observers = [];
-  private serverUrl = 'http://localhost:8080/restapi/account'
-
-  loadAll() {
-    this.accounts = this.httpClient.get<Account[]>(this.serverUrl);
-    return this.accounts;
-  }
-
+  
   delete(id: number) {
     this.httpClient.delete(this.serverUrl + '/' + id)
-      .subscribe(this.notifyAll.bind(this));
+    .subscribe(() => {
+      let index = this.accounts.findIndex(i => i.id == id);
+      this.accounts.splice(index, 1);
+      this.notifyAll();;
+    });
   }
-
+  
   add(account: Account) {
-    this.httpClient.post(this.serverUrl, account)
-      .subscribe(this.notifyAll.bind(this));
+    this.httpClient.post<Account>(this.serverUrl, account)
+    .subscribe((acc) => {
+      let index = this.accounts.findIndex(i => i.id == account.id);
+      account.id != undefined ? this.accounts[index] = acc : this.accounts.push(acc);
+      this.notifyAll();
+    });
   }
-
-  notifyAll() { this.observers.forEach((item) => item(this.loadAll())) }
-
-  register(observer: (observable: Observable<Account[]>) => void) {
+  
+  register(observer: (observable: Account[]) => void) {
     this.observers.push(observer);
-    observer(this.loadAll());
+    if(this.accounts) {
+      observer(this.accounts);
+    } else {
+      this.loadAll();
+    }
+  }
+  
+  private loadAll() {
+    this.httpClient.get<Account[]>(this.serverUrl)
+      .subscribe((acc) => {
+        this.accounts = acc;
+        this.notifyAll();
+      });
+  }
+  
+  private notifyAll() { 
+    this.observers.forEach(item => item(this.accounts));
   }
 }

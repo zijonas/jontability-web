@@ -12,7 +12,7 @@
   <ul>
     <li *ngFor="let cat of categories">
       <div class="item">
-        <button (click)="remove(cat.id)" value="Delete">X</button>
+        <button (click)="delete(cat.id)" value="Delete">X</button>
         <div class="desc">{{cat.name}}</div>
       </div>
     </li>

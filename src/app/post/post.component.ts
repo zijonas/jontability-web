@@ -30,8 +30,8 @@ export class PostComponent implements OnInit {
 
   ngOnInit() {
     this.postService.register(this.loadAll.bind(this));
-    this.categoryService.loadAll().subscribe(cat => this.categories = cat);
-    this.accountService.loadAll().subscribe(cat => this.accounts = cat);
+    this.categoryService.register(((cats: Category[]) => {this.categories = cats}).bind(this));
+    this.accountService.register(((accs: Account[]) => this.accounts = accs).bind(this));
   }
 
   loadAll(observable: Observable<Post[]>) {

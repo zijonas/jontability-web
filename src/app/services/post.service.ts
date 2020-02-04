@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class PostService {
 
-  serverUrl = 'http://localhost:8080/restapi/post';
+  serverUrl = 'http://localhost:8080/post';
 
   posts: Observable<Post[]>;
   observers = [];

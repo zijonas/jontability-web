@@ -16,7 +16,7 @@ export class CategoryComponent implements OnInit {
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
-    this.categoryService.register(this.loadCategories.bind(this));
+    this.categoryService.register(this.load.bind(this));
   }
 
   add() {
@@ -24,11 +24,11 @@ export class CategoryComponent implements OnInit {
     this.category = new Category();
   }
 
-  loadCategories(categories: Category[]) {
+  load(categories: Category[]) {
     this.categories = categories;
   }
 
-  remove(id: number) {
+  delete(id: number) {
     this.categoryService.delete(id);
   }
 
