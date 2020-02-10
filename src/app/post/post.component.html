@@ -3,25 +3,38 @@
 <div class="box-container"></div>
 <div class="middle-box">
   <form class="addPostForm" action="#" method="POST">
-    <input [(ngModel)]="post.invoice" type="checkbox" name="invoice" />
-    <select [(ngModel)]="post.categoryId" [ngModelOptions]="{standalone: true}">
-      <option *ngFor="let c of categories" [ngValue]="c.id">{{c.name}}</option>
-    </select>
-    <select [(ngModel)]="post.accountId" [ngModelOptions]="{standalone: true}" >
-      <option *ngFor="let a of accounts" [ngValue]="a.id">{{a.name}}</option>
-    </select>
-    <input [(ngModel)]="post.description" placeholder="Observação" type="text" name="description" />
-    <input [(ngModel)]="day" placeholder="Dia do mês" type="number" name="day" />
-    <input [(ngModel)]="post.value" placeholder="Valor" type="number" name="value" />
-    <button (click)="add()" value="Add">Gravar</button>
+    <mat-checkbox [(ngModel)]="post.invoice" name="invoice">Entrada</mat-checkbox>
+    <mat-form-field>
+      <mat-label>Categoria</mat-label>
+      <mat-select [(ngModel)]="post.categoryId" name="categorie">
+        <mat-option *ngFor="let c of categories" [value]="c.id">{{c.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Conta</mat-label>
+      <mat-select [(ngModel)]="post.accountId" name="account" >
+        <mat-option *ngFor="let a of accounts" [value]="a.id">{{a.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Observação</mat-label>
+      <input matInput [(ngModel)]="post.description" type="text" placeholder="Ex: Caneta azul" name="description"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="day" placeholder="Dia do mês" type="number" name="day"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="post.value" placeholder="Valor" type="number" name="value" />
+    </mat-form-field>
+    <button mat-raised-button (click)="add()" value="Add">Gravar</button>
   </form>
 </div>
-<div>
+<div class="middle-box">
   <div *ngFor="let post of posts">
     <div class="item">
-      <button class="delete" (click)="delete(post.id)" value="Delete">X</button>
-      <button class="edit" (click)="delete(post.id)" value="Edit">E</button>
-      <button class="copy" (click)="delete(post.id)" value="Copy">C</button>
+      <button mat-raised-button color="warn" class="delete" (click)="delete(post.id)" value="Delete">X</button>
+      <button mat-raised-button color="primary" class="edit" (click)="delete(post.id)" value="Edit">E</button>
+      <button mat-raised-button color="accent" class="copy" (click)="delete(post.id)" value="Copy">C</button>
       <div class="text">{{post.date | date : 'dd.MM'}}</div>
       <div class="text">{{categoryName(post.categoryId)}}</div>
       <div class="text">{{post.description}}</div>

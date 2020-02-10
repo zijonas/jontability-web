@@ -1,3 +1,7 @@
+@import '@angular/material/prebuilt-themes/purple-green.css';
+// @include mat-core();
+
+
 $input: #26de81;
 $input-color: #4b6584;
 $border-color: #20bf6b;
@@ -5,45 +9,6 @@ $page-title-color: #3867d6;
 $delete-color: #eb3b5a;
 $edit-color:#0fb9b1;
 $copy-color: #3867d6;
-
-input, button, select {
-    border: solid 1px $border-color;
-    background: $input;
-    display: block;
-    color: $input-color;
-    margin-bottom: 0.1em;
-    font-size: 1.5rem;
-    margin: 1px;
-    padding: 0.2em;
-    border-radius: 0.1em;
-}
-
-button {
-    border: none;
-    margin: 1px;
-    cursor: pointer;
-
-    &.delete {
-        width: 2em;
-        height: 2em;
-        background: $delete-color;
-    }
-    &.copy {
-        width: 2em;
-        height: 2em;
-        background: $copy-color;
-    }
-    &.edit {
-        width: 2em;
-        height: 2em;
-        background: $edit-color;
-    }
-}
-
-select {
-    -webkit-appearance: scrollbarbutton-up;
-    -moz-appearance: scrollbarbutton-up;
-}
 
 .middle-box {
     display: grid;
@@ -58,11 +23,8 @@ select {
 .page-title {
     font-size: 2rem;
     text-align: center;
-    color: $page-title-color;
 }
 
 
-body {
-    background: #d1d8e0;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
