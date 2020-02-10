@@ -12,7 +12,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Conta</mat-label>
-      <mat-select [(ngModel)]="post.accountId" name="account" >
+      <mat-select [(ngModel)]="post.accountId" (selectionChange)="onAccountSelection()" name="account" >
         <mat-option *ngFor="let a of accounts" [value]="a.id">{{a.name}}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -30,7 +30,7 @@
   </form>
 </div>
 <div class="middle-box">
-  <div *ngFor="let post of posts">
+  <div *ngFor="let post of filteredPosts">
     <div class="item">
       <button mat-raised-button color="warn" class="delete" (click)="delete(post.id)" value="Delete">X</button>
       <button mat-raised-button color="primary" class="edit" (click)="delete(post.id)" value="Edit">E</button>

@@ -22,6 +22,7 @@ export class PostComponent implements OnInit {
 
   selectedDate: Date = new Date();
   posts: Post[] = [];
+  filteredPosts: Post[] = [];
   categories: Category[] = [];
   accounts: Account[] = [];
   post: Post = new Post();
@@ -37,6 +38,7 @@ export class PostComponent implements OnInit {
   loadAll(observable: Observable<Post[]>) {
     observable.subscribe(posts => {
       this.posts = posts;
+      this.filteredPosts = posts;
       this.sum = this.total();
     });
   }
@@ -74,5 +76,9 @@ export class PostComponent implements OnInit {
     if(this.accounts.length > 0) {
       return this.accounts.filter((acc) => acc.id == id).map((acc) => acc.name);
     }
+  }
+
+  onAccountSelection() {
+    this.filteredPosts = this.posts.filter((p) => p.accountId == this.post.accountId);
   }
 }
