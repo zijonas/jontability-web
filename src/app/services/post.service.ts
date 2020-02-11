@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http'
-import { Post } from '../post/post'
+import { Post } from '../post/entities/post'
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,34 +10,46 @@ export class PostService {
 
   serverUrl = 'http://localhost:8080/post';
 
-  posts: Observable<Post[]>;
+  posts: Post[];
   observers = [];
 
   constructor(private httpClient: HttpClient) { }
 
-  loadAll(): Observable<Post[]> {
-    // httpParams = new HttpParams();
-
-    this.posts = this.httpClient.get<Post[]>(this.serverUrl);
-    return this.posts;
-  }
-
-  removeItem(id: number) {
+  delete(id: number) {
     this.httpClient.delete(this.serverUrl + '/' + id)
-      .subscribe(this.notifyAll.bind(this));
+    .subscribe(() => {
+      let index = this.posts.findIndex(i => i.id == id);
+      this.posts.splice(index, 1);
+      this.notifyAll();
+    });
   }
-
-  addItem(post: Post) {
-    this.httpClient.post(this.serverUrl, post)
-      .subscribe(this.notifyAll.bind(this));
+  
+  add(post: Post) {
+    this.httpClient.post<Post>(this.serverUrl, post)
+    .subscribe(post => {
+      let index = this.posts.findIndex(i => i.id == post.id);
+      this.posts.push(post);
+      this.notifyAll();
+    });
   }
-
-  notifyAll() {
-    this.observers.forEach((item) => item(this.loadAll()));
-  }
-
-  register(observer: (observable: Observable<Post[]>) => void) {
+  
+  register(observer: (posts: Post[]) => void) {
     this.observers.push(observer);
-    observer(this.loadAll());
+    if(!this.posts) {
+      this.loadAll(null, null);
+    }
+    observer(this.posts);
+  }
+
+  private notifyAll() {
+    this.observers.forEach(observer => observer(this.posts));
+  }
+  
+  private loadAll(from: Date, to: Date) {
+    this.httpClient.get<Post[]>(this.serverUrl)
+    .subscribe(posts => {
+      this.posts = posts;
+      this.notifyAll();
+    });
   }
 }

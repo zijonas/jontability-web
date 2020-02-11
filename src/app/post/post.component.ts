@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Post } from './post';
+import { Post } from './entities/post';
 import { Observable } from 'rxjs';
 import { PostService } from '../services/post.service';
 import { Category } from '../category/category';
@@ -28,6 +28,7 @@ export class PostComponent implements OnInit {
   post: Post = new Post();
   day: number;
   sum: number;
+  selectedMonth: number;
 
   ngOnInit() {
     this.postService.register(this.loadAll.bind(this));
@@ -35,20 +36,16 @@ export class PostComponent implements OnInit {
     this.accountService.register(((accs: Account[]) => this.accounts = accs).bind(this));
   }
 
-  loadAll(observable: Observable<Post[]>) {
-    observable.subscribe(posts => {
+  loadAll(posts: Post[]) {
       this.posts = posts;
       this.filteredPosts = posts;
       this.sum = this.total();
-    });
   }
 
   add() {
     this.post.date = new Date();
     this.post.date.setDate(this.day);
-   
-    this.postService.addItem(this.post);
-
+    this.postService.add(this.post);
     this.resetPost();
   }
 
@@ -58,7 +55,7 @@ export class PostComponent implements OnInit {
   }
 
   delete(id: number) {
-    this.postService.removeItem(id);
+    this.postService.delete(id);
   }
 
   total() {

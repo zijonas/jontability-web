@@ -26,8 +26,12 @@ export class AccountService {
   add(account: Account) {
     this.httpClient.post<Account>(this.serverUrl, account)
     .subscribe((acc) => {
-      let index = this.accounts.findIndex(i => i.id == account.id);
-      account.id != undefined ? this.accounts[index] = acc : this.accounts.push(acc);
+      if(account.id) {
+        let index = this.accounts.findIndex(i => i.id == account.id);
+        this.accounts[index] = acc;
+      } else {
+        this.accounts.push(acc);
+      }
       this.notifyAll();
     });
   }
