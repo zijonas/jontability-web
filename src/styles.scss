@@ -1,22 +1,48 @@
 @import '@angular/material/prebuilt-themes/purple-green.css';
-// @include mat-core();
 
-
-$input: #26de81;
-$input-color: #4b6584;
-$border-color: #20bf6b;
-$page-title-color: #3867d6;
-$delete-color: #eb3b5a;
-$edit-color:#0fb9b1;
-$copy-color: #3867d6;
-
-.middle-box {
+.box {
     display: grid;
-    justify-items: center;
-    
-    form {
-        display: flex;
+    grid-gap: 1rem;
+    grid-template-rows: 200px calc(100% -200px);
+    grid-template-areas:
+    "head head head"
+    "left main right";
+    grid-template-columns: 1fr 1fr 1fr;
+
+    .middle-box {
+        grid-area: main;
         justify-items: center;
+    }
+        
+    .head-box {
+        grid-area: head;
+        display: grid;
+        justify-items: center;
+
+        form {
+            display: flex;
+        }
+    }
+
+    .left-box {
+        grid-area: left;
+    }
+    
+    .right-box {
+        grid-area: right;
+    }
+}
+
+@media (min-width: 1200px) {
+    .box {
+        grid-template-columns: 1fr 1fr 1fr;
+
+    }
+}
+
+@media (max-width: 800px) {
+    .box { 
+        grid-template-columns: 0fr 3fr 0fr;
     }
 }
 

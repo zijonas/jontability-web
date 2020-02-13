@@ -37,8 +37,9 @@ export class PostService {
     this.observers.push(observer);
     if(!this.posts) {
       this.loadAll(null, null);
+    } else {
+      observer(this.posts);
     }
-    observer(this.posts);
   }
 
   private notifyAll() {
