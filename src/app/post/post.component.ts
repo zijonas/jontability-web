@@ -14,14 +14,7 @@ import { MonthInfo } from './entities/monthInfo';
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit {
-
-  constructor(
-    private postService: PostService,
-    private postSumService: PostSumService,
-    private categoryService: CategoryService,
-    private accountService: AccountService) { }
-
-
+  displayedColumns: string[] = ['date', 'category', 'description', 'value', 'delete'];
   posts: Post[] = [];
   filteredPosts: Post[] = [];
   sumPerMonth: MonthInfo[];
@@ -32,6 +25,12 @@ export class PostComponent implements OnInit {
   post: Post = new Post();
   day: number;
   sum: number;
+
+  constructor(
+    private postService: PostService,
+    private postSumService: PostSumService,
+    private categoryService: CategoryService,
+    private accountService: AccountService) { }
 
   ngOnInit() {
     this.postService.register(this.loadAll.bind(this));
@@ -63,9 +62,13 @@ export class PostComponent implements OnInit {
     this.postService.delete(id);
   }
 
+  select(post: Post) {
+    this.post = post;
+  }
+
   total() {
     return this.filteredPosts.map((item) => item.invoice ? item.value : -item.value).
-      reduce((acc, val) => { return acc + val });
+      reduce((acc, val) => { return acc + val }, 0);
   }
 
   categoryName(id: number) {
@@ -80,8 +83,9 @@ export class PostComponent implements OnInit {
     }
   }
 
-  onAccountSelection() {
-    this.selectedAccount = this.post.accountId;
+  onAccountSelection(id: number) {
+    this.selectedAccount = id;
+    this.post.accountId = id;
     this.filteredPosts = this.filterList();
     this.sum = this.total();
   }
@@ -96,7 +100,6 @@ export class PostComponent implements OnInit {
     let f: Post[] = this.posts;
     if(this.selectMonth) {
       f = f.filter((i) => new Date(i.date).getMonth() == this.selectedMonth);
-      console.log(f);
     }
     if(this.selectedAccount) {
       f = f.filter((p) => p.accountId == this.post.accountId);

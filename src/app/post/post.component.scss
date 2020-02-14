@@ -2,23 +2,29 @@
     margin: 5px;
 }
 
-.item {
-    display: flex;
-    align-items: center;
-
-    .text {
-        width: 10rem;
-        padding-left: 1rem;
-        font-size: 2rem;
-
-        &.number {
-            text-align: right;
-        }
-    }
+.post-table {
+    width: 100%;
 }
 
 .month-button {
     width: 100%;
     height: 3em;
-    margin: 5px 0 5px 0;
 }
+
+.button-grid {
+    display: grid;
+    grid-gap: 0.5rem;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+// @media (min-width: 400px) {
+//     .button-grid { grid-template-columns: repeat(1, 1fr); }
+// }
+
+// @media (min-width: 1250px) {
+//     .button-grid { grid-template-columns: repeat(2, 1fr); }
+// }
+
+// @media (min-width: 1400px) {
+//     .button-grid { grid-template-columns: repeat(3, 1fr); }
+// }

@@ -3,11 +3,10 @@
 .box {
     display: grid;
     grid-gap: 1rem;
-    grid-template-rows: 200px calc(100% -200px);
     grid-template-areas:
-    "head head head"
-    "left main right";
-    grid-template-columns: 1fr 1fr 1fr;
+    "head head head head"
+    "left main main right";
+    grid-template-columns: repeat(4, 1fr);
 
     .middle-box {
         grid-area: main;
@@ -33,16 +32,19 @@
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1800px) {
     .box {
-        grid-template-columns: 1fr 1fr 1fr;
-
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1200px) {
     .box { 
-        grid-template-columns: 0fr 3fr 0fr;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas:
+        "left left right right"
+        "head head head head"
+        "main main main main";
     }
 }
 
