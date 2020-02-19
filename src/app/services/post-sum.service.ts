@@ -27,6 +27,10 @@ export class PostSumService implements OnInit {
     return sums;
   }
 
+  allExistingYears(posts: Post[]): number[] {
+    return posts.map(i => new Date(i.date).getFullYear()).filter((value, index, self) => self.indexOf(value) === index);
+  }
+
   private loadAll(posts: Post[]) {
     this.posts = posts;
   }

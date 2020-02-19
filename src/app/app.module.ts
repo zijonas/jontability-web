@@ -22,7 +22,9 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatSortModule} from '@angular/material/sort'; 
 import {MatTableModule} from '@angular/material/table';
-import {MatButtonToggleModule} from '@angular/material/button-toggle'; 
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon'; 
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatSidenavModule,
     MatSortModule,
     MatTableModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatCardModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

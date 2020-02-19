@@ -17,6 +17,10 @@
     grid-template-columns: repeat(3, 1fr);
 }
 
+.month-card {
+    width: 120px;
+}
+
 // @media (min-width: 400px) {
 //     .button-grid { grid-template-columns: repeat(1, 1fr); }
 // }

@@ -20,8 +20,10 @@ export class PostComponent implements OnInit {
   sumPerMonth: MonthInfo[];
   categories: Category[] = [];
   accounts: Account[] = [];
+  existingYears: number[];
   selectedMonth: number = new Date().getMonth();
   selectedAccount: number;
+  selectedYear: number = new Date().getFullYear();
   post: Post = new Post();
   day: number;
   sum: number;
@@ -35,14 +37,19 @@ export class PostComponent implements OnInit {
   ngOnInit() {
     this.postService.register(this.loadAll.bind(this));
     this.categoryService.register(((cats: Category[]) => { this.categories = cats }).bind(this));
-    this.accountService.register(((accs: Account[]) => this.accounts = accs).bind(this));
+    this.accountService.register(((accs: Account[]) => { this.accounts = accs; this.selectedAccount = accs[0].id}).bind(this));
   }
 
   loadAll(posts: Post[]) {
     this.posts = posts;
     this.filteredPosts = this.filterList();
     this.sum = this.total();
-    this.sumPerMonth = this.postSumService.sumPerMonth(new Date().getFullYear(), this.posts);
+    this.loadSumPerMoth();
+    this.existingYears = this.postSumService.allExistingYears(this.posts);
+  }
+  
+  private loadSumPerMoth () {
+    this.sumPerMonth = this.postSumService.sumPerMonth(this.selectedYear, this.posts);
   }
 
   add() {
@@ -91,14 +98,28 @@ export class PostComponent implements OnInit {
   }
   
   selectMonth(month: number) {
-    this.selectedMonth = month;
+    if(month == this.selectedMonth) {
+      this.selectedMonth = -1;
+    } else {
+      this.selectedMonth = month;
+    }
     this.filteredPosts = this.filterList();
     this.sum = this.total();
   }
   
+  selectYear(year: number) {
+    this.selectedYear = year;
+    this.filteredPosts = this.filterList();
+    this.sum = this.total();
+    this.loadSumPerMoth();
+  }
+  
   filterList() {
     let f: Post[] = this.posts;
-    if(this.selectMonth) {
+    if(this.selectedYear) {
+      f = f.filter((i) => new Date(i.date).getFullYear() == this.selectedYear);
+    }
+    if(this.selectedMonth >= 0) {
       f = f.filter((i) => new Date(i.date).getMonth() == this.selectedMonth);
     }
     if(this.selectedAccount) {

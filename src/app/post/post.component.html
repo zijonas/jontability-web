@@ -67,19 +67,30 @@
       </table>
     </div>
     <div class="right-box">
-      <div>
-        <mat-button-toggle-group class="button-grid" name="fontStyle" aria-label="Month">
+      <div class="button-grid">
+        <mat-card *ngFor="let month of sumPerMonth" class="month-card" (click)="selectMonth(month.month)">
+          <mat-card-header>
+            <mat-card-title>{{month.month | month}}</mat-card-title>
+            <mat-card-subtitle>{{month.sum}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              Some Info
+            </p>
+          </mat-card-content>
+        </mat-card>
+        
+        <!-- <mat-button-toggle-group class="button-grid" name="monthsGrid" aria-label="Month">
           <mat-button-toggle color="accent" *ngFor="let month of sumPerMonth" (click)="selectMonth(month.month)">
             {{month.month | month}} ({{month.sum}})
           </mat-button-toggle>
-        </mat-button-toggle-group>
-
-        <!-- <div *ngFor="let month of sumPerMonth">
-        <button class="month-button" mat-raised-button color="primary" (click)="selectMonth(month.month)">
-          {{month.month | month}} ({{month.sum}})
-        </button>
-      </div> -->
+        </mat-button-toggle-group> -->
       </div>
+        <mat-button-toggle-group class="button-grid" name="yearsGrid" aria-label="Year">
+          <mat-button-toggle *ngFor="let year of existingYears" (click)="selectYear(year)">
+            {{year}}
+          </mat-button-toggle>
+        </mat-button-toggle-group>
     </div>
   </div>
 </div>

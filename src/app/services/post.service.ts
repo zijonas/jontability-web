@@ -26,9 +26,13 @@ export class PostService {
   
   add(post: Post) {
     this.httpClient.post<Post>(this.serverUrl, post)
-    .subscribe(post => {
-      let index = this.posts.findIndex(i => i.id == post.id);
-      this.posts.push(post);
+    .subscribe(ret => {
+      if(post.id) {
+        let index = this.posts.findIndex(i => i.id == ret.id);
+        this.posts[index] = ret;
+      } else {
+        this.posts.push(ret);
+      }
       this.notifyAll();
     });
   }
