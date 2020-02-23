@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 import { MonthPipe } from './utils/month.pipe';  
+import { CategoryPipe } from './utils/category.pipe'; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,7 +25,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatCardModule} from '@angular/material/card';
-import {MatIconModule} from '@angular/material/icon'; 
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {MatIconModule} from '@angular/material/icon';
     HomeComponent,
     PostComponent,
     AccountComponent,
-    MonthPipe
+    MonthPipe,
+    CategoryPipe
   ],
   imports: [
     BrowserModule,

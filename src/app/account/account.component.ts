@@ -23,6 +23,16 @@ export class AccountComponent implements OnInit {
     this.account = new Account();
   }
 
-  delete(id: number) { this.accountService.delete(id); }
+  delete() {
+    this.accountService.delete(this.account.id);
+    this.account = new Account()
+  }
 
+  clear() {
+    this.account = new Account();
+  }
+
+  onSelect(id: number) {
+    this.account = this.accounts.find(i => i.id == id);
+  }
 }

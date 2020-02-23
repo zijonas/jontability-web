@@ -19,6 +19,10 @@
 
 .month-card {
     width: 120px;
+
+    &.selected {
+        background-color: red;
+    }
 }
 
 // @media (min-width: 400px) {

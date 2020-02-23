@@ -16,14 +16,17 @@ import { MonthInfo } from './entities/monthInfo';
 export class PostComponent implements OnInit {
   displayedColumns: string[] = ['date', 'category', 'description', 'value', 'delete'];
   posts: Post[] = [];
+  
   filteredPosts: Post[] = [];
+  selectedAccount: number;
+  selectedMonth: number = new Date().getMonth();
+  selectedYear: number = new Date().getFullYear();
+
   sumPerMonth: MonthInfo[];
+
   categories: Category[] = [];
   accounts: Account[] = [];
   existingYears: number[];
-  selectedMonth: number = new Date().getMonth();
-  selectedAccount: number;
-  selectedYear: number = new Date().getFullYear();
   post: Post = new Post();
   day: number;
   sum: number;

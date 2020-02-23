@@ -1,21 +1,26 @@
-<h2 class="page-title">Account</h2>
+<div class="box">
+  <div class="head-box">
+    <h2 class="page-title">Contas</h2>
+    <button mat-raised-button color="accent" (click)="add()" value="add">Limpar</button>
+    <button mat-raised-button color="warn" (click)="delete()" value="delete">Remover</button>
+    <form class="addPostForm" action="#" method="POST">
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput [(ngModel)]="account.name" type="text" placeholder="Ex: Mercado" name="name" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="add()" value="Add">Gravar</button>
+    </form>
+  </div>
 
-<div class="middle-box">
-  <select [(ngModel)]="account">
-    <option *ngFor="let a of accounts" [ngValue]="a">{{a.name}}</option>
-  </select>
-  <form class="addAccountForm" action="#" method="POST">
-    <input [(ngModel)]="account.name" placeholder="Account name" type="string" name="name" />
-    <input [(ngModel)]="account.type" placeholder="Account type" type="string" name="type" />
-    <button (click)="add()" value="Add">Submit</button>
-  </form>
-  
-  <ul>
-    <li *ngFor="let acc of accounts">
-      <div class="item">
-        <button (click)="delete(acc.id)" value="Delete">X</button>
-        <div class="desc">{{acc.name}}</div>
-      </div>
-    </li>
-  </ul>
+  <div class="middle-box">
+    <div class="button-grid">
+      <mat-card *ngFor="let acc of accounts" [ngClass]="{selected: acc == account}" class="account-card"
+        (click)="onSelect(acc.id)">
+        <mat-card-header>
+          <mat-card-title>{{acc.name}}</mat-card-title>
+          <mat-card-subtitle>{{acc.id}}</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </div>
 </div>
