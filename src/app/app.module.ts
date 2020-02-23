@@ -12,6 +12,7 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { PostComponent } from './post/post.component';
 import { AccountComponent } from './account/account.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material/checkbox'
@@ -36,7 +37,8 @@ import {MatIconModule} from '@angular/material/icon';
     PostComponent,
     AccountComponent,
     MonthPipe,
-    CategoryPipe
+    CategoryPipe,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
