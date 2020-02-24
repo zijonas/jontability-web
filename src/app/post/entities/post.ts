@@ -1,5 +1,6 @@
-export class Post {
-    id: number;
+import { BaseEntity } from 'src/app/base/baseEntity';
+
+export class Post extends BaseEntity {
     categoryId: number;
     accountId: number;
     description: string;

@@ -1,38 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../services/account.service';
+import { Component } from '@angular/core';
+import { BaseComponent } from '../base/baseComponent';
 import { Account } from './account';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent extends BaseComponent<Account> {
 
-  constructor(private accountService: AccountService) { }
-
-  accounts: Account[];
-  account: Account = new Account();
-
-  ngOnInit() {
-    this.accountService.register(((acc: Account[]) => this.accounts = acc).bind(this));
+  constructor(accountService: AccountService) {
+    super(accountService, Account);
   }
 
-  add() {
-    this.accountService.add(this.account);
-    this.account = new Account();
-  }
-
-  delete() {
-    this.accountService.delete(this.account.id);
-    this.account = new Account()
-  }
-
-  clear() {
-    this.account = new Account();
-  }
-
-  onSelect(id: number) {
-    this.account = this.accounts.find(i => i.id == id);
-  }
 }

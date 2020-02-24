@@ -1,15 +1,13 @@
+.button-grid {
+    display: grid;
+    grid-gap: 0.5rem;
+    grid-template-columns: repeat(6, 1fr);
+}
 
-.item {
-    display: flex;
-    align-items: center;
+.card {
+    width: 150px;
 
-    .id {
-        width: 100%;
-        border-right: 0.5em black outset;
-        padding-left: 10px;
-    }
-
-    .desc {
-        padding-left: 4px;
+    &.selected {
+        background-color: red;
     }
 }

@@ -11,28 +11,25 @@ import { AccountService } from '../services/account.service';
       <div #myChart style="width: 100%;height:600px;"></div>
   `,
 })
-export class DashboardComponent implements AfterViewInit, OnInit {
+export class DashboardComponent implements AfterViewInit {
   @ViewChild('myChart', null) myChart: ElementRef;
 
-  chart: ECharts.ECharts;
+  chart: ECharts.ECharts = null;
   posts: Post[];
   accounts: Account[];
 
 
   constructor(private postService: PostService, private accountService: AccountService) { }
 
-  ngOnInit() {
-    this.postService.register(psts => {
-      this.posts = psts;
-      this.chart.setOption(this.createOptions());
-    });
-    this.accountService.register(acc => {
-      this.accounts = acc
-    });
-  }
-
   ngAfterViewInit() {
-    this.chart = ECharts.init(this.myChart.nativeElement, 'dark');
+    this.postService.register(psts => {
+      this.accountService.register((acc: Account[]) => {
+        this.accounts = acc
+        this.posts = psts;
+        this.chart = ECharts.init(this.myChart.nativeElement, 'dark');
+        this.chart.setOption(this.createOptions());
+      });
+    });
   }
 
   createOptions() {
