@@ -32,8 +32,8 @@ export class DashboardComponent implements AfterViewInit {
     });
   }
 
-  createOptions() {
-    let option = {
+  getBarOptions() {
+    return {
       title: {
         text: 'Saldo por mês'
       },
@@ -47,23 +47,67 @@ export class DashboardComponent implements AfterViewInit {
       yAxis: {},
       series: []
     };
-    option.legend.data = this.getAccounts();
-    option.series = this.getSeries();
+  }
+
+  getPieOptions() {
+    return {
+      title: {
+        text: 'Jonas',
+        subtext: 'tooltip',
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)'
+      },
+      legend: {
+        type: 'scroll',
+        orient: 'vertical',
+        right: 10,
+        top: 20,
+        bottom: 20,
+        data: [],
+        selected: {}
+      },
+      series: [
+        {
+          name: 'serie1',
+          type: 'pie',
+          radius: '55%',
+          center: ['40%', '50%'],
+          data: [],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      ]
+    };
+  }
+
+
+  createOptions() {
+    let option = this.getPieOptions();
+    let series = this.getSeries();
+    option.legend.data = this.getAccounts(series);
+    option.series[0].data = series;
     console.log(option);
     return option;
   }
 
-  private getAccounts() {
-    return this.accounts.map(i => i.name);
+  private getAccounts(series: [{name: string, value: number}]) {
+    return series.sort((i, j) => j.value - i.value).map(i => i.name);
   }
 
-  private getSeries() {
-    let series = [];
+  private getSeries(): [{name: string, value:number}] {
+    let series: [{name: string, value: number}] = [];
     this.accounts.forEach(acc => {
       let serie = {
         name: acc.name,
-        type: 'bar',
-        data: [this.posts.filter(pst => pst.accountId == acc.id).map(i => i.value).reduce((i, j) => i += j, 0)]
+        value: this.posts.filter(pst => pst.accountId == acc.id).map(i => i.value).reduce((i, j) => i += j, 0)
       };
       series.push(serie);
     });
