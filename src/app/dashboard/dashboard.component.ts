@@ -88,8 +88,7 @@ export class DashboardComponent implements AfterViewInit {
     };
   }
 
-
-  createOptions() {
+  createOptions(): any {
     let option = this.getPieOptions();
     let series = this.getSeries();
     option.legend.data = this.getAccounts(series);
@@ -98,16 +97,16 @@ export class DashboardComponent implements AfterViewInit {
     return option;
   }
 
-  private getAccounts(series: [{name: string, value: number}]) {
+  private getAccounts(series: {"name": string, "value": number}[]) {
     return series.sort((i, j) => j.value - i.value).map(i => i.name);
   }
 
-  private getSeries(): [{name: string, value:number}] {
-    let series: [{name: string, value: number}] = [];
+  private getSeries(): {"name": string, "value": number}[] {
+    let series: {"name": string, "value": number}[] = [];
     this.accounts.forEach(acc => {
       let serie = {
-        name: acc.name,
-        value: this.posts.filter(pst => pst.accountId == acc.id).map(i => i.value).reduce((i, j) => i += j, 0)
+        "name": acc.name,
+        "value": this.posts.filter(pst => pst.accountId == acc.id).map(i => i.value).reduce((i, j) => i += j, 0)
       };
       series.push(serie);
     });
