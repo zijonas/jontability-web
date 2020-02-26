@@ -14,19 +14,9 @@ import { PostComponent } from './post/post.component';
 import { AccountComponent } from './account/account.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCheckboxModule } from '@angular/material/checkbox'
-import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatToolbarModule } from '@angular/material/toolbar'
-import { MatButtonModule } from '@angular/material/button'
-import { MatInputModule } from '@angular/material/input'
-import {MatSelectModule} from '@angular/material/select';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatSortModule} from '@angular/material/sort'; 
-import {MatTableModule} from '@angular/material/table';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {MatCardModule} from '@angular/material/card';
-import {MatIconModule} from '@angular/material/icon';
+import { ImportsModule } from './imports/imports.module';
+
+
 
 @NgModule({
   declarations: [
@@ -45,19 +35,7 @@ import {MatIconModule} from '@angular/material/icon';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    MatCheckboxModule,
-    MatFormFieldModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSortModule,
-    MatTableModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatIconModule
+    ImportsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
