@@ -4,11 +4,12 @@ import { PostService } from '../services/post.service';
 import { Post } from '../post/entities/post';
 import { Account } from '../account/account';
 import { AccountService } from '../services/account.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   template: `
-      <div #myChart style="width: 100%;height:600px;"></div>
+      <div #myChart style="width: 100%;"></div>
   `,
 })
 export class DashboardComponent implements AfterViewInit {
@@ -17,11 +18,21 @@ export class DashboardComponent implements AfterViewInit {
   chart: ECharts.ECharts = null;
   posts: Post[];
   accounts: Account[];
+  height = '600px';
 
 
-  constructor(private postService: PostService, private accountService: AccountService) { }
+  constructor(private postService: PostService, private accountService: AccountService, private route: ActivatedRoute) {
+    route.queryParamMap.subscribe(params => {
+      if(params.has('height')) {
+        this.height = params.get('height');
+      }
+    });
+  }
 
   ngAfterViewInit() {
+
+    this.myChart.nativeElement.style.height = this.height;
+
     this.postService.register(psts => {
       this.accountService.register((acc: Account[]) => {
         this.accounts = acc
@@ -93,7 +104,6 @@ export class DashboardComponent implements AfterViewInit {
     let series = this.getSeries();
     option.legend.data = this.getAccounts(series);
     option.series[0].data = series;
-    console.log(option);
     return option;
   }
 

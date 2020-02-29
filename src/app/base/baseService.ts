@@ -5,7 +5,7 @@ export abstract class BaseService<T extends BaseEntity> {
 
   constructor(private httpClient: HttpClient) {}
 
-  protected serverUrl = ''
+  protected serverUrl: string;
   
   entities: T[];
   observers: ((observable: T[]) => void)[] = [];
@@ -41,7 +41,7 @@ export abstract class BaseService<T extends BaseEntity> {
     }
     console.log(this.observers.length + ' Observers conected to ')
   }
-  
+
   protected loadAll() {
     this.httpClient.get<T[]>(this.serverUrl)
       .subscribe((acc) => {

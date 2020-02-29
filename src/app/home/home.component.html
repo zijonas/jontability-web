@@ -1,38 +1,61 @@
-<div class="box-container">
-    <div class="box">
-        <nav>
-            <a routerLink="/categories">
-                <div class="inner">
-                    <p class="nav">Categorias</p>
+<div class="homeGrid">
+    <div class="grid">
+        <mat-card class="card" (click)="navigate('categories')">
+            <mat-card-header class="header">
+                <mat-card-title>
+                    Categorias
+                </mat-card-title>
+                <mat-card-subtitle>
+                    Total de categorias: {{categories.length}}
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="grid">
+                    <div *ngFor="let cat of categories">
+                        {{cat.name}}
+                    </div>
                 </div>
-            </a>
-        </nav>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="card" (click)="navigate('accounts')">
+            <mat-card-header class="header">
+                <mat-card-title>
+                    Contas
+                </mat-card-title>
+                <mat-card-subtitle>
+                    Total de contas: {{accounts.length}}
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="card" (click)="navigate('dashboard')">
+            <mat-card-header class="header">
+                <mat-card-title>
+                    Gráficos
+                </mat-card-title>
+                <mat-card-subtitle>
+                    Gráficos para análise
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>HUEHUEHBRBR</p>
+            </mat-card-content>
+        </mat-card>
     </div>
-    <div class="box">
-        <nav>
-            <a routerLink="/posts">
-                <div class="inner">
-                    <p class="nav">Lançamentos</p>
-                </div>
-            </a>
-        </nav>
-    </div>
-    <div class="box">
-        <nav>
-            <a routerLink="/accounts">
-                <div class="inner">
-                    <p class="nav">Contas</p>
-                </div>
-            </a>
-        </nav>
-    </div>
-    <div class="box">
-        <nav>
-            <a routerLink="/dashboard">
-                <div class="inner">
-                    <p class="nav">Gráficos</p>
-                </div>
-            </a>
-        </nav>
+    <div class="posts">
+        <mat-card class="card">
+            <mat-card-header class="header" (click)="navigate('posts')">
+                <mat-card-title>
+                    Lançamentos
+                </mat-card-title>
+                <mat-card-subtitle>
+                    {{posts.length}} feitos neste ano
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <app-dashboard></app-dashboard>
+            </mat-card-content>
+        </mat-card>
     </div>
 </div>
