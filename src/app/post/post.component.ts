@@ -7,6 +7,7 @@ import { CategoryService } from '../services/category.service';
 import { AccountService } from '../services/account.service';
 import { Account } from '../account/account';
 import { MonthInfo } from './entities/monthInfo';
+import { PostFilterService } from '../filter/post-filter.service';
 
 @Component({
   selector: 'app-post',
@@ -35,17 +36,21 @@ export class PostComponent implements OnInit {
     private postService: PostService,
     private postSumService: PostSumService,
     private categoryService: CategoryService,
-    private accountService: AccountService) { }
+    private accountService: AccountService,
+    private filterService: PostFilterService) { }
 
   ngOnInit() {
-    this.postService.register(this.loadAll.bind(this));
     this.categoryService.register(((cats: Category[]) => { this.categories = cats }).bind(this));
-    this.accountService.register(((accs: Account[]) => { this.accounts = accs; this.selectedAccount = accs[0].id }).bind(this));
+    this.accountService.register(((accs: Account[]) => {
+      this.accounts = accs;
+      this.selectedAccount = accs[0].id;
+      this.postService.register(this.loadAll.bind(this));
+    }).bind(this));
   }
 
   loadAll(posts: Post[]) {
     this.posts = posts;
-    this.filteredPosts = this.filterList();
+    this.filteredPosts = this.filterService.filter(posts, this.selectedAccount, this.selectedYear, this.selectedMonth);
     this.sum = this.total();
     this.loadSumPerMoth();
     this.existingYears = this.postSumService.allExistingYears(this.posts);
@@ -96,38 +101,29 @@ export class PostComponent implements OnInit {
   onAccountSelection(id: number) {
     this.selectedAccount = id;
     this.post.accountId = id;
-    this.filteredPosts = this.filterList();
+    this.filteredPosts = this.filterService.filter(this.posts, this.selectedAccount, this.selectedYear, this.selectedMonth);
     this.sum = this.total();
   }
 
   selectMonth(month: number) {
     if (month == this.selectedMonth) {
-      this.selectedMonth = -1;
+      this.selectedMonth = null;
     } else {
       this.selectedMonth = month;
     }
-    this.filteredPosts = this.filterList();
+    this.filteredPosts = this.filterService.filter(this.posts, this.selectedAccount, this.selectedYear, this.selectedMonth);
     this.sum = this.total();
   }
 
   selectYear(year: number) {
-    this.selectedYear = year;
-    this.filteredPosts = this.filterList();
+    if (year == this.selectedYear) {
+      this.selectedYear = null;
+    } else {
+      this.selectedYear = year;
+    }
+    this.filteredPosts = this.filterService.filter(this.posts, this.selectedAccount, this.selectedYear, this.selectedMonth);
     this.sum = this.total();
     this.loadSumPerMoth();
   }
 
-  filterList() {
-    let f: Post[] = this.posts;
-    if (this.selectedYear) {
-      f = f.filter((i) => new Date(i.date).getFullYear() == this.selectedYear);
-    }
-    if (this.selectedMonth >= 0) {
-      f = f.filter((i) => new Date(i.date).getMonth() == this.selectedMonth);
-    }
-    if (this.selectedAccount) {
-      f = f.filter((p) => p.accountId == this.post.accountId);
-    }
-    return f;
-  }
 }

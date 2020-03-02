@@ -24,11 +24,12 @@
       </form>
     </div>
     <div class="left-box">
-      <mat-button-toggle-group class="button-grid" name="fontStyle" aria-label="Month" [value]="selectedAccount">
-        <mat-button-toggle *ngFor="let account of accounts" (click)="onAccountSelection(account.id)" value="account.id">
+      <div class="button-grid" name="fontStyle">
+        <button mat-raised-button *ngFor="let account of accounts" (click)="onAccountSelection(account.id)"
+          [ngClass]="{selected: selectedAccount == account.id}">
           {{account.name}}
-        </mat-button-toggle>
-      </mat-button-toggle-group>
+        </button>
+      </div>
     </div>
     <div class="middle-box">
       <table mat-table [dataSource]="filteredPosts" matSort class="mat-elevation-z8 post-table">
@@ -62,10 +63,11 @@
     </div>
     <div class="right-box">
       <div class="button-grid">
-        <mat-card *ngFor="let month of sumPerMonth" [ngClass]="{selected: selectedMonth == month.month}" class="month-card" (click)="selectMonth(month.month)">
+        <mat-card *ngFor="let month of sumPerMonth" [ngClass]="{selected: selectedMonth == month.month}"
+          class="month-card" (click)="selectMonth(month.month)">
           <mat-card-header>
             <mat-card-title>{{month.month | month}}</mat-card-title>
-            <mat-card-subtitle>{{month.sum}}</mat-card-subtitle>
+            <mat-card-subtitle>{{month.sum | number : '1.2'}}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
             <p>
@@ -74,11 +76,12 @@
           </mat-card-content>
         </mat-card>
       </div>
-        <mat-button-toggle-group class="button-grid" name="yearsGrid" aria-label="Year">
-          <mat-button-toggle *ngFor="let year of existingYears" (click)="selectYear(year)">
-            {{year}}
-          </mat-button-toggle>
-        </mat-button-toggle-group>
+      <div class="button-grid">
+        <button mat-raised-button *ngFor="let year of existingYears" (click)="selectYear(year)"
+          [ngClass]="{selected: selectedYear == year}">
+          {{year}}
+        </button>
+      </div>
     </div>
   </div>
 </div>

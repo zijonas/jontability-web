@@ -12,12 +12,12 @@ export abstract class BaseService<T extends BaseEntity> {
   
   add(entities: T) {
     this.httpClient.post<T>(this.serverUrl, entities)
-    .subscribe((acc) => {
+    .subscribe((entity) => {
       if(entities.id) {
         let index = this.entities.findIndex(i => i.id == entities.id);
-        this.entities[index] = acc;
+        this.entities[index] = entity;
       } else {
-        this.entities.push(acc);
+        this.insertNew(this.entities, entity);
       }
       this.notifyAll();
     });
@@ -45,9 +45,19 @@ export abstract class BaseService<T extends BaseEntity> {
   protected loadAll() {
     this.httpClient.get<T[]>(this.serverUrl)
       .subscribe((acc) => {
-        this.entities = acc;
+        this.entities = this.sort(acc);
         this.notifyAll();
       });
+  }
+
+  protected insertNew(entities: T[], entity: T) {
+    for(let i = 0; i < entities.length; i++) {
+      if(this.compare(entities[i], entity) <= 0) {
+        entities.splice(i, 0, entity);
+        return;
+      }
+    }
+    entities.push(entity);
   }
   
   protected notifyAll() {
@@ -57,4 +67,10 @@ export abstract class BaseService<T extends BaseEntity> {
   protected getHttpClient() {
     return this.httpClient;
   }
+
+  sort(entities: T[]): T[] {
+    return entities.sort(this.compare);
+  };
+
+  abstract compare(entity1: T, entity2: T): number
 }

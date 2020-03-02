@@ -14,4 +14,8 @@ export class AccountService extends BaseService<Account>{
     super(httpClient);
   }
 
+  compare(acc1: Account, acc2: Account): number {
+    return acc1.name.localeCompare(acc2.name)
+  }
+
 }
