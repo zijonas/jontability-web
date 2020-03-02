@@ -52,7 +52,7 @@ export abstract class BaseService<T extends BaseEntity> {
 
   protected insertNew(entities: T[], entity: T) {
     for(let i = 0; i < entities.length; i++) {
-      if(this.compare(entities[i], entity) <= 0) {
+      if(this.compare(entities[i], entity) >= 0) {
         entities.splice(i, 0, entity);
         return;
       }
