@@ -25,7 +25,7 @@
     </div>
     <div class="left-box">
       <div class="button-grid" name="fontStyle">
-        <button mat-raised-button *ngFor="let account of accounts" (click)="onAccountSelection(account.id)"
+        <button mat-raised-button *ngFor="let account of accounts" (click)="selectAccount(account.id)"
           [ngClass]="{selected: selectedAccount == account.id}">
           {{account.name}}
         </button>

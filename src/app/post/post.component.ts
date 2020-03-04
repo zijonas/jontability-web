@@ -30,7 +30,7 @@ export class PostComponent implements OnInit {
   existingYears: number[];
   post: Post = new Post();
   day: number;
-  sum: number;
+  saldo: number;
 
   constructor(
     private postService: PostService,
@@ -50,8 +50,8 @@ export class PostComponent implements OnInit {
 
   loadAll(posts: Post[]) {
     this.posts = posts;
-    this.filteredPosts = this.filterService.filter(posts, this.selectedAccount, this.selectedYear, this.selectedMonth);
-    this.sum = this.total();
+    this.filter();
+    this.setSaldo();
     this.loadSumPerMoth();
     this.existingYears = this.postSumService.allExistingYears(this.posts);
   }
@@ -68,6 +68,10 @@ export class PostComponent implements OnInit {
     this.resetPost();
   }
 
+  inputActive() {
+    return this.selectedMonth != null && this.selectedYear != null && this.selectedAccount != null;
+  }
+
   resetPost() {
     this.post.value = null;
     this.post.description = null;
@@ -81,28 +85,22 @@ export class PostComponent implements OnInit {
     this.post = post;
   }
 
-  total() {
-    return this.filteredPosts.map((item) => item.invoice ? item.value : -item.value).
-      reduce((acc, val) => { return acc + val }, 0);
+  setSaldo() {
+    this.saldo = this.postSumService.saldo(this.filteredPosts);
   }
 
-  categoryName(id: number) {
-    if (this.categories.length > 0) {
-      return this.categories.filter((cat) => cat.id == id).map((cat) => cat.name);
-    }
-  }
-
-  accountName(id: number) {
-    if (this.accounts.length > 0) {
-      return this.accounts.filter((acc) => acc.id == id).map((acc) => acc.name);
-    }
-  }
-
-  onAccountSelection(id: number) {
-    this.selectedAccount = id;
-    this.post.accountId = id;
+  filter() {
     this.filteredPosts = this.filterService.filter(this.posts, this.selectedAccount, this.selectedYear, this.selectedMonth);
-    this.sum = this.total();
+  }
+
+  selectAccount(account: number) {
+    if (account == this.selectedAccount) {
+      this.selectedAccount = null;
+    } else {
+      this.selectedAccount = account;
+    }
+    this.filter();
+    this.setSaldo();
   }
 
   selectMonth(month: number) {
@@ -111,8 +109,8 @@ export class PostComponent implements OnInit {
     } else {
       this.selectedMonth = month;
     }
-    this.filteredPosts = this.filterService.filter(this.posts, this.selectedAccount, this.selectedYear, this.selectedMonth);
-    this.sum = this.total();
+    this.filter();
+    this.setSaldo();
   }
 
   selectYear(year: number) {
@@ -121,8 +119,8 @@ export class PostComponent implements OnInit {
     } else {
       this.selectedYear = year;
     }
-    this.filteredPosts = this.filterService.filter(this.posts, this.selectedAccount, this.selectedYear, this.selectedMonth);
-    this.sum = this.total();
+    this.filter();
+    this.setSaldo();
     this.loadSumPerMoth();
   }
 

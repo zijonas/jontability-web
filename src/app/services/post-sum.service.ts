@@ -20,7 +20,7 @@ export class PostSumService implements OnInit {
     let sums: MonthInfo[] = [];
     range(0, 12).forEach((val) => {
       let sum = posts.filter((i) => new Date(i.date).getFullYear() == year && new Date(i.date).getMonth() == val)
-        .map((i) => i.invoice ? i.value : -i.value)
+        .map(p => this.calculatedValue(p))
         .reduce((acum, val) => acum + val, 0);
       sums.push(new MonthInfo(val, sum));
     });
@@ -33,5 +33,15 @@ export class PostSumService implements OnInit {
 
   private loadAll(posts: Post[]) {
     this.posts = posts;
+  }
+
+  saldo(posts: Post[]) {
+    return posts.map(p => this.calculatedValue(p)).
+      reduce((acc, val) => { return acc + val }, 0);
+  }
+
+
+  calculatedValue(post: Post) {
+    return post.invoice ? post.value : -post.value;
   }
 }

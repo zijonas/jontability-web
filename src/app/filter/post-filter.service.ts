@@ -15,14 +15,23 @@ export class PostFilterService {
   }
 
   filter(posts: Post[], accountId: number, year?: number, month?: number) {
-    let filterChain = new Array(this.filterByAccount(accountId));
+    let filterChain = [];
+
+    if(accountId && accountId != null) {
+      filterChain.push(this.filterByAccount(accountId));
+    }
     if(month && month != null) {
       filterChain.push(this.filterByMonth(month))
     }
     if(year && year != null) {
       filterChain.push(this.filterByYear(year))
     }
-    return this.execFilter(posts, filterChain);
+
+    if(filterChain.length > 0) {
+      return this.execFilter(posts, filterChain);
+    } else {
+      return posts;
+    }
   }
 
   private filterByMonth(month: number) {
