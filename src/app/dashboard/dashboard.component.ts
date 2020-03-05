@@ -23,24 +23,25 @@ export class DashboardComponent implements AfterViewInit {
 
   constructor(private postService: PostService, private accountService: AccountService, private route: ActivatedRoute) {
     route.queryParamMap.subscribe(params => {
-      if(params.has('height')) {
+      if (params.has('height')) {
         this.height = params.get('height');
       }
     });
   }
 
   ngAfterViewInit() {
-
     this.myChart.nativeElement.style.height = this.height;
 
-    this.postService.register(psts => {
-      this.accountService.register((acc: Account[]) => {
-        this.accounts = acc
+    this.postService.getAll()
+      .then(psts => {
         this.posts = psts;
+        return this.accountService.getAll();
+      })
+      .then((acc: Account[]) => {
+        this.accounts = acc;
         this.chart = ECharts.init(this.myChart.nativeElement, 'dark');
         this.chart.setOption(this.createOptions());
       });
-    });
   }
 
   getBarOptions() {
@@ -63,7 +64,7 @@ export class DashboardComponent implements AfterViewInit {
   getPieOptions() {
     return {
       title: {
-        text: 'Jonas',
+        text: 'Total',
         subtext: 'tooltip',
         left: 'center'
       },
@@ -107,12 +108,12 @@ export class DashboardComponent implements AfterViewInit {
     return option;
   }
 
-  private getAccounts(series: {"name": string, "value": number}[]) {
+  private getAccounts(series: { "name": string, "value": number }[]) {
     return series.sort((i, j) => j.value - i.value).map(i => i.name);
   }
 
-  private getSeries(): {"name": string, "value": number}[] {
-    let series: {"name": string, "value": number}[] = [];
+  private getSeries(): { "name": string, "value": number }[] {
+    let series: { "name": string, "value": number }[] = [];
     this.accounts.forEach(acc => {
       let serie = {
         "name": acc.name,

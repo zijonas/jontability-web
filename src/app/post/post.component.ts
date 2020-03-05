@@ -40,15 +40,25 @@ export class PostComponent implements OnInit {
     private filterService: PostFilterService) { }
 
   ngOnInit() {
-    this.categoryService.register(((cats: Category[]) => { this.categories = cats }).bind(this));
-    this.accountService.register(((accs: Account[]) => {
-      this.accounts = accs;
-      this.selectedAccount = accs[0].id;
-      this.postService.register(this.loadAll.bind(this));
-    }).bind(this));
+    this.categoryService.getAll()
+      .then((cats: Category[]) => {
+        this.categories = cats;
+        return this.accountService.getAll();
+      })
+      .then((accs: Account[]) => {
+        this.accounts = accs;
+        return this.postService.getAll();
+      })
+      .then((posts: Post[]) => {
+        this.selectedAccount = this.accounts[0].id;
+        this.init(posts);
+      });
+    this.categoryService.register(((cats: Category[]) => this.categories = cats).bind(this));
+    this.accountService.register(((accs: Account[]) => this.accounts = accs).bind(this));
+    this.postService.register(this.init.bind(this));
   }
 
-  loadAll(posts: Post[]) {
+  init(posts: Post[]) {
     this.posts = posts;
     this.filter();
     this.setSaldo();
@@ -105,7 +115,7 @@ export class PostComponent implements OnInit {
 
   selectMonth(month: number) {
     if (month == this.selectedMonth) {
-      this.selectedMonth = null;
+      this.selectedMonth = -1;
     } else {
       this.selectedMonth = month;
     }

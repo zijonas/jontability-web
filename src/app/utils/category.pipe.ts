@@ -10,7 +10,12 @@ export class CategoryPipe implements PipeTransform {
   categories: Category[];
 
   constructor(private categoryService : CategoryService){
-    categoryService.register((cats) => this.categories = cats);
+    categoryService.getAll().then(this.init.bind(this));
+    categoryService.register(this.init.bind(this));
+  }
+
+  init(cats: Category[]) {
+    this.categories = cats
   }
 
   transform(value: number, ...args: any[]): string {

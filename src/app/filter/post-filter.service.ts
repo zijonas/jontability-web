@@ -17,13 +17,14 @@ export class PostFilterService {
   filter(posts: Post[], accountId: number, year?: number, month?: number) {
     let filterChain = [];
 
-    if(accountId && accountId != null) {
+    if(accountId != 0) {
       filterChain.push(this.filterByAccount(accountId));
     }
-    if(month && month != null) {
+    if(month >= 0) {
+      console.log(month)
       filterChain.push(this.filterByMonth(month))
     }
-    if(year && year != null) {
+    if(year != 0) {
       filterChain.push(this.filterByYear(year))
     }
 

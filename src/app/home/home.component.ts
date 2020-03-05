@@ -25,9 +25,9 @@ export class HomeComponent implements OnInit {
     private postService: PostService) { }
 
   ngOnInit(): void {
-    this.postService.register(posts => this.posts = posts);
-    this.categoryService.register(cats => this.categories = cats);
-    this.accountService.register(accs => this.accounts = accs);
+    this.postService.getAll().then(posts => this.posts = posts);
+    this.categoryService.getAll().then(cats => this.categories = cats);
+    this.accountService.getAll().then(accs => this.accounts = accs);
   }
 
   navigate(dest: string) {

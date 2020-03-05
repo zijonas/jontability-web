@@ -7,14 +7,7 @@ import { range } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class PostSumService implements OnInit {
-  posts: Post[];
-
-  constructor(private postService: PostService) { }
-
-  ngOnInit() {
-    this.postService.register(this.loadAll);
-  }
+export class PostSumService {
 
   sumPerMonth(year: number, posts: Post[]): MonthInfo[] {
     let sums: MonthInfo[] = [];
@@ -31,15 +24,10 @@ export class PostSumService implements OnInit {
     return posts.map(i => new Date(i.date).getFullYear()).filter((value, index, self) => self.indexOf(value) === index);
   }
 
-  private loadAll(posts: Post[]) {
-    this.posts = posts;
-  }
-
   saldo(posts: Post[]) {
     return posts.map(p => this.calculatedValue(p)).
       reduce((acc, val) => { return acc + val }, 0);
   }
-
 
   calculatedValue(post: Post) {
     return post.invoice ? post.value : -post.value;
