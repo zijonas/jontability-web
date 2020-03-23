@@ -105,7 +105,7 @@ export class PostComponent implements OnInit {
 
   selectAccount(account: number) {
     if (account == this.selectedAccount) {
-      this.selectedAccount = null;
+      this.selectedAccount = 0;
     } else {
       this.selectedAccount = account;
     }
@@ -125,7 +125,7 @@ export class PostComponent implements OnInit {
 
   selectYear(year: number) {
     if (year == this.selectedYear) {
-      this.selectedYear = null;
+      this.selectedYear = 0;
     } else {
       this.selectedYear = year;
     }

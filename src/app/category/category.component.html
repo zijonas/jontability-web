@@ -14,8 +14,7 @@
 
   <div class="middle-box">
     <div class="button-grid">
-      <mat-card *ngFor="let cat of entities" [ngClass]="{selected: cat == entity}" class="card"
-        (click)="onSelect(cat)">
+      <mat-card *ngFor="let cat of entities" [ngClass]="{selected: cat == entity}" class="card" (click)="onSelect(cat)">
         <mat-card-header>
           <mat-card-title>{{cat.name}}</mat-card-title>
           <mat-card-subtitle>{{cat.id}}</mat-card-subtitle>
