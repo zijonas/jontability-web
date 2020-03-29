@@ -104,7 +104,7 @@ export class PostComponent implements OnInit {
   }
 
   selectAccount(account: number) {
-    if (account == this.selectedAccount) {
+    if (account === this.selectedAccount) {
       this.selectedAccount = 0;
     } else {
       this.selectedAccount = account;
@@ -114,7 +114,7 @@ export class PostComponent implements OnInit {
   }
 
   selectMonth(month: number) {
-    if (month == this.selectedMonth) {
+    if (month === this.selectedMonth) {
       this.selectedMonth = -1;
     } else {
       this.selectedMonth = month;

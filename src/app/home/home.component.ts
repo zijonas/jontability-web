@@ -14,9 +14,9 @@ import { AccountService } from '../services/account.service';
 })
 export class HomeComponent implements OnInit {
 
-  private posts: Post[] = [];
-  private categories: Category[] = [];
-  private accounts: Account[] = [];
+  posts: Post[] = [];
+  categories: Category[] = [];
+  accounts: Account[] = [];
 
   constructor(
     private router: Router,
