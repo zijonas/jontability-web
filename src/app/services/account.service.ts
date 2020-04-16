@@ -2,14 +2,13 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Account} from '../account/account';
 import {BaseService} from '../base/baseService';
-import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService extends BaseService<Account> {
 
-  protected serverUrl = `${environment.apiUrl}account`;
+  protected serverUrl = '/api/account';
 
   constructor(httpClient: HttpClient) {
     super(httpClient);

@@ -13,12 +13,12 @@ export class JwtInterceptor implements HttpInterceptor {
     const currentUser = this.authenticationService.currentUserValue;
     const isLoggedIn = currentUser && currentUser.jwt;
     if (isLoggedIn) {
-      console.log('OKASOKASDKOASDK');
-      req = req.clone({
+      const newReq = req.clone({
         setHeaders: {
           Authorization: `Bearer ${currentUser.jwt}`
         }
       });
+      return next.handle(newReq);
     }
 
     return next.handle(req);

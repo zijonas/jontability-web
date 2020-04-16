@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from './model/User';
-import {environment} from '../../environments/environment';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -23,7 +22,7 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    return this.httpClient.post<any>(`${environment.apiUrl}authenticate`, {username, password})
+    return this.httpClient.post<any>('/api/authenticate', {username, password})
       .pipe(map(user => {
         if (user && user.jwt) {
           localStorage.setItem(this.key, JSON.stringify(user));

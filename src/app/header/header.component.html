@@ -1,5 +1,6 @@
 <mat-toolbar color="primary">
     <div class="header">
+      <div class="left">
         <nav>
             <a routerLink="/home">
                 <div class="title">
@@ -7,5 +8,14 @@
                 </div>
             </a>
         </nav>
+      </div>
+      <div class="right">
+        <div>
+          {{activeUser}}
+        </div>
+        <button mat-icon-button>
+          <mat-icon aria-hidden="false" color="accent" (click)="logout()">logout</mat-icon>
+        </button>
+      </div>
     </div>
 </mat-toolbar>
