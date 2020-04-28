@@ -5,7 +5,7 @@ import {AuthGuard} from './core/security/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./home-ui/home.component').then(m => m.HomeComponent),
+    loadChildren: () => import('./home-ui/home-ui.module').then(m => m.HomeUiModule),
     canActivate: [AuthGuard]
   },
   {
@@ -13,24 +13,24 @@ const routes: Routes = [
     loadChildren: () => import('./category-ui/category.component').then(c => c.CategoryComponent),
     canActivate: [AuthGuard]
   },
-  {
-    path: 'posts',
-    loadChildren: () => import('./post-ui/post.component').then(p => p.PostComponent),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'accounts',
-    loadChildren: () => import('./account-ui/account.component').then(a => a.AccountComponent),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'dashboard',
-    loadChildren: () => import('./dashboard-ui/dashboard.component').then(d => d.DashboardComponent),
-    canActivate: [AuthGuard]
-  },
+  // {
+  //   path: 'posts',
+  //   loadChildren: () => import('./post-ui/post.component').then(p => p.PostComponent),
+  //   canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'accounts',
+  //   loadChildren: () => import('./account-ui/account.component').then(a => a.AccountComponent),
+  //   canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'dashboard',
+  //   loadChildren: () => import('./dashboard-ui/dashboard.component').then(d => d.DashboardComponent),
+  //   canActivate: [AuthGuard]
+  // },
   {
     path: 'login',
-    loadChildren: () => import('./login-ui/login.component').then(l => l.LoginComponent)
+    loadChildren: () => import('./login-ui/login-ui.module').then(l => l.LoginUiModule)
   },
   {
     path: '**',

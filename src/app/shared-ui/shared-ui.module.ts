@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatToolbarModule } from '@angular/material/toolbar'
@@ -16,10 +15,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { CoreModule } from '../core/core.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { NavigationParentComponent } from './presentational/navigation-parent.component';
 
 
 const materialModules = [
-  BrowserAnimationsModule,
   MatCheckboxModule,
   MatFormFieldModule,
   MatToolbarModule,
@@ -34,6 +33,10 @@ const materialModules = [
   MatIconModule
 ];
 
+const sharedComponents = [
+  NavigationParentComponent
+]
+
 const uiModules = [
   CommonModule,
   CoreModule,
@@ -44,12 +47,16 @@ const uiModules = [
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ...sharedComponents
+  ],
   imports: [
     ...uiModules
   ],
   exports: [
-    ...materialModules
+    ...materialModules,
+    ...uiModules,
+    ...sharedComponents
   ]
 })
 export class SharedUiModule { }

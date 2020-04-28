@@ -54,5 +54,35 @@
 }
 
 
+.header {
+    display: flex;
+    width: 100%;
+  
+    .title {
+      position: relative;
+      left: calc(50% - 5rem);
+      font-size: 2rem;
+      width: 10rem;
+      font-weight: bolder;
+    }
+  
+    a {
+      text-decoration: none;
+    }
+  
+    .left {
+      display: flex;
+      align-items: center;
+    }
+  
+    .right {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+  
+  }
+
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
