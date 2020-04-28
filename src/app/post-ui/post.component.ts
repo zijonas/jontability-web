@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Post } from './entities/post';
-import { PostService } from '../services/post.service';
-import { PostSumService } from '../services/post-sum.service';
-import { Category } from '../category/category';
-import { CategoryService } from '../services/category.service';
-import { AccountService } from '../services/account.service';
-import { Account } from '../account/account';
-import { MonthInfo } from './entities/monthInfo';
-import { PostFilterService } from '../filter/post-filter.service';
+import { Post } from '../core/model/post';
+import { PostService } from '../core/services/post.service';
+import { PostSumService } from '../core/services/post-sum.service';
+import { Category } from '../core/model/category';
+import { CategoryService } from '../core/services/category.service';
+import { AccountService } from '../core/services/account.service';
+import { Account } from '../core/model/account';
+import { MonthInfo } from '../core/model/monthInfo';
+import { PostFilterService } from '../core/filter/post-filter.service';
 
 @Component({
   selector: 'app-post',

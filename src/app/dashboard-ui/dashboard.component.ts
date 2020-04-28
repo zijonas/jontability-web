@@ -1,9 +1,9 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import * as ECharts from 'echarts';
-import { PostService } from '../services/post.service';
-import { Post } from '../post/entities/post';
-import { Account } from '../account/account';
-import { AccountService } from '../services/account.service';
+import { PostService } from '../core/services/post.service';
+import { Post } from '../core/model/post';
+import { Account } from '../core/model/account';
+import { AccountService } from '../core/services/account.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

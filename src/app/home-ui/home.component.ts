@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CategoryService } from '../services/category.service';
-import { PostService } from '../services/post.service';
-import { Post } from '../post/entities/post';
-import { Category } from '../category/category';
-import { Account } from '../account/account';
-import { AccountService } from '../services/account.service';
+import { CategoryService } from '../core/services/category.service';
+import { PostService } from '../core/services/post.service';
+import { Post } from '../core/model/post';
+import { Category } from '../core/model/category';
+import { Account } from '../core/model/account';
+import { AccountService } from '../core/services/account.service';
 
 @Component({
   selector: 'app-home',

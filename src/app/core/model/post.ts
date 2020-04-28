@@ -1,4 +1,4 @@
-import { BaseEntity } from 'src/app/base/baseEntity';
+import { BaseEntity } from 'src/app/core/base/baseEntity';
 
 export class Post extends BaseEntity {
     categoryId: number;

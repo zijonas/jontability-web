@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { PostService } from './post.service';
-import { MonthInfo } from '../post/entities/monthInfo';
-import { Post } from '../post/entities/post';
+import { MonthInfo } from '../model/monthInfo';
+import { Post } from '../model/post';
 import { range } from 'rxjs';
 
 @Injectable({

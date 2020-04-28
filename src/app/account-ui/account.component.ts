@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { BaseComponent } from '../base/baseComponent';
-import { Account } from './account';
-import { AccountService } from '../services/account.service';
+import { BaseComponent } from '../core/base/baseComponent';
+import { Account } from '../core/model/account';
+import { AccountService } from '../core/services/account.service';
 
 @Component({
   selector: 'app-account',

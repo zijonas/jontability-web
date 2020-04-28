@@ -1,42 +1,36 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {CategoryComponent} from './category/category.component';
-import {PostComponent} from './post/post.component';
-import {HomeComponent} from './home/home.component';
-import {AccountComponent} from './account/account.component';
-import {DashboardComponent} from './dashboard/dashboard.component';
-import {AuthGuard} from './security/auth.guard';
-import {LoginComponent} from './login/login.component';
+import {AuthGuard} from './core/security/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    loadChildren: () => import('./home-ui/home.component').then(m => m.HomeComponent),
     canActivate: [AuthGuard]
   },
   {
     path: 'categories',
-    component: CategoryComponent,
+    loadChildren: () => import('./category-ui/category.component').then(c => c.CategoryComponent),
     canActivate: [AuthGuard]
   },
   {
     path: 'posts',
-    component: PostComponent,
+    loadChildren: () => import('./post-ui/post.component').then(p => p.PostComponent),
     canActivate: [AuthGuard]
   },
   {
     path: 'accounts',
-    component: AccountComponent,
+    loadChildren: () => import('./account-ui/account.component').then(a => a.AccountComponent),
     canActivate: [AuthGuard]
   },
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    loadChildren: () => import('./dashboard-ui/dashboard.component').then(d => d.DashboardComponent),
     canActivate: [AuthGuard]
   },
   {
     path: 'login',
-    component: LoginComponent
+    loadChildren: () => import('./login-ui/login.component').then(l => l.LoginComponent)
   },
   {
     path: '**',

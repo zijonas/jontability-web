@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { BaseComponent } from '../base/baseComponent';
-import { Category } from './category'
-import { CategoryService } from '../services/category.service'
+import { BaseComponent } from '../core/base/baseComponent';
+import { Category } from '../core/model/category'
+import { CategoryService } from '../core/services/category.service'
 
 @Component({
   selector: 'app-category',
