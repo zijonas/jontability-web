@@ -10,19 +10,19 @@ const routes: Routes = [
   },
   {
     path: 'categories',
-    loadChildren: () => import('./category-ui/category.component').then(c => c.CategoryComponent),
+    loadChildren: () => import('./category-ui/category-ui.module').then(c => c.CategoryUiModule),
     canActivate: [AuthGuard]
   },
-  // {
-  //   path: 'posts',
-  //   loadChildren: () => import('./post-ui/post.component').then(p => p.PostComponent),
-  //   canActivate: [AuthGuard]
-  // },
-  // {
-  //   path: 'accounts',
-  //   loadChildren: () => import('./account-ui/account.component').then(a => a.AccountComponent),
-  //   canActivate: [AuthGuard]
-  // },
+  {
+    path: 'posts',
+    loadChildren: () => import('./post-ui/post-ui.module').then(p => p.PostUiModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'accounts',
+    loadChildren: () => import('./account-ui/account-ui.module').then(a => a.AccountUiModule),
+    canActivate: [AuthGuard]
+  },
   // {
   //   path: 'dashboard',
   //   loadChildren: () => import('./dashboard-ui/dashboard.component').then(d => d.DashboardComponent),

@@ -23,8 +23,7 @@ import { Router } from '@angular/router';
             <mat-icon aria-hidden="false" color="accent" (click)="logout()">logout</mat-icon>
           </button>
         </div>
-  `,
-  styleUrls: ['./header.component.scss']
+  `
 })
 export class HeaderComponent implements OnInit {
 

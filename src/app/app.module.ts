@@ -17,7 +17,7 @@ import { SharedUiModule } from './shared-ui/shared-ui.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    CoreModule.forRoot(),
+    CoreModule,
     SharedUiModule
   ],
   providers: [

@@ -8,12 +8,10 @@ import { MonthPipe } from './utils/month.pipe';
     declarations: [
         CategoryPipe,
         MonthPipe
+    ],
+    exports: [
+        MonthPipe
     ]
 })
 export class CoreModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: CoreModule
-        }
-    }
 }
