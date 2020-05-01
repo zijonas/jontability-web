@@ -10,12 +10,16 @@ export abstract class BaseService<T extends BaseEntity> {
   entities: T[];
   observers: ((observable: T[]) => void)[] = [];
 
-  add(entities: T) {
-    this.httpClient.post<T>(this.serverUrl, entities)
+  add(entity: T) {
+    this.httpClient.post<T>(this.serverUrl, entity)
       .subscribe((entity) => {
-        if (entities.id) {
-          let index = this.entities.findIndex(i => i.id == entities.id);
-          this.entities[index] = entity;
+        if (entity.id) {
+          let index = this.entities.findIndex(i => i.id == entity.id);
+          if(index >= 0) {
+            this.entities[index] = entity;
+          } else {
+            this.insertNew(this.entities, entity);
+          }
         } else {
           this.insertNew(this.entities, entity);
         }

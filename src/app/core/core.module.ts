@@ -10,7 +10,8 @@ import { MonthPipe } from './utils/month.pipe';
         MonthPipe
     ],
     exports: [
-        MonthPipe
+        MonthPipe,
+        CategoryPipe
     ]
 })
 export class CoreModule {
