@@ -8,7 +8,6 @@ import { Account } from '../../core/model/account';
 import { AccountService } from '../../core/services/account.service';
 
 @Component({
-  selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })

@@ -12,6 +12,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatGridListModule } from '@angular/material/grid-list';
+
 import { CoreModule } from '../core/core.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -32,7 +34,8 @@ const materialModules = [
   MatTableModule,
   MatButtonToggleModule,
   MatCardModule,
-  MatIconModule
+  MatIconModule,
+  MatGridListModule
 ];
 
 const sharedComponents = [

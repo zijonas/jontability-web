@@ -4,16 +4,16 @@ import { BaseEntity } from 'src/app/core/base/baseEntity';
 @Component({
     selector: 'card-list',
     template: `
-        <div class="middle-box">
-            <div class="button-grid">
-                <mat-card *ngFor="let ent of entities" [ngClass]="{selected: ent == entity}" class="card" (click)="this.onSelect.emit(ent)">
+        <mat-grid-list cols="10" rowHeight="100px" gutterSize="10px">
+            <mat-grid-tile *ngFor="let ent of entities">
+                <mat-card [ngClass]="{selected: ent == entity}" class="flex" (click)="onSelect.emit(ent)">
                     <mat-card-header>
                     <mat-card-title>{{ent.name}}</mat-card-title>
                     <mat-card-subtitle>{{ent.id}}</mat-card-subtitle>
                     </mat-card-header>
                 </mat-card>
-            </div>
-        </div>
+            </mat-grid-tile>
+        </mat-grid-list>
     `
 })
 export class CardListComponent {
