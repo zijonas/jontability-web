@@ -9,9 +9,9 @@ export class CategoryPipe implements PipeTransform {
 
   categories: Category[];
 
-  constructor(private categoryService : CategoryService){
-    categoryService.getAll().then(this.init.bind(this));
+  constructor(private categoryService: CategoryService) {
     categoryService.register(this.init.bind(this));
+    categoryService.loadAll();
   }
 
   init(cats: Category[]) {

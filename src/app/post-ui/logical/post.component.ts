@@ -40,22 +40,13 @@ export class PostComponent implements OnInit {
     private filterService: PostFilterService) { }
 
   ngOnInit() {
-    this.categoryService.getAll()
-      .then((cats: Category[]) => {
-        this.categories = cats;
-        return this.accountService.getAll();
-      })
-      .then((accs: Account[]) => {
-        this.accounts = accs;
-        return this.postService.getAll();
-      })
-      .then((posts: Post[]) => {
-        this.selectedAccount = this.accounts[0].id;
-        this.init(posts);
-      });
-    this.categoryService.register(((cats: Category[]) => this.categories = cats).bind(this));
-    this.accountService.register(((accs: Account[]) => this.accounts = accs).bind(this));
-    this.postService.register(this.init.bind(this));
+    this.categoryService.register(categories => this.categories = categories);
+    this.accountService.register(accounts => this.accounts = accounts);
+    this.postService.register(posts => this.posts = posts);
+    this.categoryService.loadAll();
+    this.accountService.loadAll();
+    this.postService.loadAll();
+    this.selectedAccount = this.accounts[0].id;
   }
 
   init(posts: Post[]) {

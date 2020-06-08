@@ -6,18 +6,12 @@ export class BaseComponent<T extends BaseEntity> implements OnInit {
 
     constructor(private service: BaseService<T>, private type: new () => T) { }
 
-    entities: T[];
     entity: T = new this.type();
+    entities: T[];
 
     ngOnInit() {
-        this.service.getAll()
-            .then((acc: T[]) => {
-                this.entities = acc;
-            });
-        this.service.register(((acc: T[]) => {
-            this.clear();
-            this.entities = acc;
-        }).bind(this));
+        this.service.register(entities => this.entities = entities);
+        this.service.loadAll();
     }
 
     add() {

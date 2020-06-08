@@ -13,13 +13,12 @@ import { ActivatedRoute } from '@angular/router';
   `,
 })
 export class DashboardComponent implements AfterViewInit {
-  @ViewChild('myChart', null) myChart: ElementRef;
-
+  @ViewChild('myChart', null)
+  myChart: ElementRef;
   chart: ECharts.ECharts = null;
   posts: Post[];
   accounts: Account[];
   height = '600px';
-
 
   constructor(private postService: PostService, private accountService: AccountService, private route: ActivatedRoute) {
     route.queryParamMap.subscribe(params => {
@@ -31,17 +30,16 @@ export class DashboardComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.myChart.nativeElement.style.height = this.height;
-
-    this.postService.getAll()
-      .then(psts => {
-        this.posts = psts;
-        return this.accountService.getAll();
-      })
-      .then((acc: Account[]) => {
-        this.accounts = acc;
+    this.accountService.register(accounts => {
+      this.accounts = accounts;
+      this.postService.register(posts => {
+        this.posts = posts;
         this.chart = ECharts.init(this.myChart.nativeElement, 'dark');
         this.chart.setOption(this.createOptions());
       });
+    });
+    this.accountService.loadAll(); 
+    this.accountService.loadAll(); 
   }
 
   getBarOptions() {

@@ -1,58 +1,61 @@
 import { HttpClient } from '@angular/common/http';
 import { BaseEntity } from './baseEntity';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { OnInit } from '@angular/core';
 
-export abstract class BaseService<T extends BaseEntity> {
+export abstract class BaseService<T extends BaseEntity> implements OnInit {
 
   constructor(private httpClient: HttpClient) { }
+  
+  ngOnInit(): void {
+    this.entities$ = this.entities.asObservable();
+  }
 
+  private entities: BehaviorSubject<T[]> = new BehaviorSubject(null);
+  private theEntities: T[];
   protected serverUrl: string;
+  entities$: Observable<T[]>;
 
-  entities: T[];
-  observers: ((observable: T[]) => void)[] = [];
+  register(callback: (entities: T[]) => any) {
+    this.entities.subscribe(callback);
+  }
 
   add(entity: T) {
     this.httpClient.post<T>(this.serverUrl, entity)
       .subscribe((entity) => {
         if (entity.id) {
-          let index = this.entities.findIndex(i => i.id == entity.id);
-          if(index >= 0) {
-            this.entities[index] = entity;
+          let index = this.theEntities.findIndex(i => i.id == entity.id);
+          if (index >= 0) {
+            this.theEntities[index] = entity;
           } else {
-            this.insertNew(this.entities, entity);
+            this.insertNew(this.theEntities, entity);
           }
         } else {
-          this.insertNew(this.entities, entity);
+          this.insertNew(this.theEntities, entity);
         }
-        this.notifyAll();
+        this.entities.next(this.theEntities);
       });
   }
 
   delete(id: number) {
     this.httpClient.delete(this.serverUrl + '/' + id)
       .subscribe(() => {
-        let index = this.entities.findIndex(i => i.id == id);
-        this.entities.splice(index, 1);
-        this.notifyAll();
+        let index = this.theEntities.findIndex(i => i.id == id);
+        this.theEntities.splice(index, 1);
+        this.entities.next(this.theEntities);
       });
   }
 
-  register(observer: (observable: T[]) => void) {
-    this.observers.push(observer);
-    console.log(this.observers.length + ' Observers conected to ')
-  }
-
-  protected loadAll() {
-    this.getAll().then((entities) => {
-      this.entities = entities;
-      this.notifyAll();
-    });
-  }
-
-  async getAll(): Promise<T[]> {
-    if(!this.entities) {
-      this.entities = await this.httpClient.get<T[]>(this.serverUrl).toPromise();
-    }
-    return this.sort(this.entities);
+  loadAll(): void {
+    if(this.entities.value == null) {
+      console.log("reloaded");
+      
+      this.httpClient.get<T[]>(this.serverUrl)
+        .subscribe(response => {
+          this.theEntities = response;
+          this.entities.next(this.sort(this.theEntities))
+        });
+    } 
   }
 
   protected insertNew(entities: T[], entity: T) {
@@ -63,10 +66,6 @@ export abstract class BaseService<T extends BaseEntity> {
       }
     }
     entities.push(entity);
-  }
-
-  protected notifyAll() {
-    this.observers.forEach(item => item(this.entities));
   }
 
   protected getHttpClient() {

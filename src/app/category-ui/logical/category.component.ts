@@ -23,7 +23,7 @@ import { CategoryService } from '../../core/services/category.service'
 })
 export class CategoryComponent extends BaseComponent<Category> {
 
-  constructor(categoryService: CategoryService) {
+  constructor(public categoryService: CategoryService) {
     super(categoryService, Category);
   }
 
