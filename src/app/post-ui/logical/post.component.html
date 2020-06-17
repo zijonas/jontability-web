@@ -1,7 +1,30 @@
-<h2 class="page-title">{{selectedYear}} Lançamentos para {{selectedMonth | month}} Total : ???</h2>
+<h2 class="page-title">Lançamentos para {{postService.filter.month | month}} de {{postService.filter.year}} = {{saldo}}</h2>
+<h3 *ngIf="selectedAccount !== null">Conta: {{selectedAccount.name}}</h3>
 <div>
   <div class="box">
     <div class="head-box">
+      <mat-form-field>
+        <mat-label>Mês</mat-label>
+        <mat-select [(ngModel)]="postService.filter.month" (selectionChange)="filterChanged()" name="month-filter">
+          <mat-option value="null">Todos</mat-option>
+          <mat-option *ngFor="let month of postService.sumPerMonth" [value]="month.month">{{month.month | month}} |
+            {{month.sum | number : '1.2'}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Ano</mat-label>
+        <mat-select [(ngModel)]="postService.filter.year" (selectionChange)="filterChanged()" name="year-filter">
+          <mat-option value="null">Todos</mat-option>
+          <mat-option *ngFor="let year of postService.years" [value]="year">{{year}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Conta</mat-label>
+        <mat-select (selectionChange)="selectAccount($event.value)" name="account-filter">
+          <mat-option value="null">Todos</mat-option>
+          <mat-option *ngFor="let account of accounts" [value]="account">{{account.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
       <form class="addPostForm" action="#" method="POST">
         <mat-checkbox [(ngModel)]="post.invoice" name="invoice">Entrada</mat-checkbox>
         <mat-form-field>
@@ -23,65 +46,8 @@
         <button mat-raised-button color="primary" (click)="add()" value="Add">Gravar</button>
       </form>
     </div>
-    <div class="left-box">
-      <div class="button-grid" name="fontStyle">
-        <button mat-raised-button *ngFor="let account of accounts" (click)="selectAccount(account.id)"
-          [ngClass]="{selected: selectedAccount == account.id}">
-          {{account.name}}
-        </button>
-      </div>
-    </div>
     <div class="middle-box">
-      <table mat-table [dataSource]="filteredPosts" matSort class="mat-elevation-z8 post-table">
-        <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef>Data</th>
-          <td mat-cell *matCellDef="let post">{{post.date | date : 'dd.MM.yyyy'}}</td>
-        </ng-container>
-        <ng-container matColumnDef="category">
-          <th mat-header-cell *matHeaderCellDef>Categoria</th>
-          <td mat-cell *matCellDef="let post">{{post.categoryId | category}}</td>
-        </ng-container>
-        <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef>Descrição</th>
-          <td mat-cell *matCellDef="let post">{{post.description}}</td>
-        </ng-container>
-        <ng-container matColumnDef="value">
-          <th mat-header-cell *matHeaderCellDef>Valor</th>
-          <td mat-cell *matCellDef="let post">{{post.value | number : '1.2'}}</td>
-        </ng-container>
-        <ng-container matColumnDef="delete">
-          <th mat-header-cell *matHeaderCellDef>Apagar</th>
-          <td mat-cell *matCellDef="let post">
-            <button class="delete-button" mat-raised-button color="primary" (click)="delete(post.id)">
-              X
-            </button>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let post; columns: displayedColumns;" (click)="select(post)"></tr>
-      </table>
-    </div>
-    <div class="right-box">
-      <div class="button-grid">
-        <mat-card *ngFor="let month of sumPerMonth" [ngClass]="{selected: selectedMonth == month.month}"
-          class="month-card" (click)="selectMonth(month.month)">
-          <mat-card-header>
-            <mat-card-title>{{month.month | month}}</mat-card-title>
-            <mat-card-subtitle>{{month.sum | number : '1.2'}}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <p>
-              Some Info
-            </p>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <div class="button-grid">
-        <button mat-raised-button *ngFor="let year of existingYears" (click)="selectYear(year)"
-          [ngClass]="{selected: selectedYear == year}">
-          {{year}}
-        </button>
-      </div>
+      <post-list [posts]="filteredPosts" (deletePost)='postService.delete($event)' (selectPost)='select($event)'></post-list>
     </div>
   </div>
 </div>

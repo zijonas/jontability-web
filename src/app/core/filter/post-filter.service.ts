@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Post } from '../model/post';
+import { Account } from '../model/account';
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +15,23 @@ export class PostFilterService {
     });
   }
 
-  filter(posts: Post[], accountId: number, year?: number, month?: number) {
+  filter(posts: Post[], account: Account) {
     let filterChain = [];
 
-    if(accountId != 0) {
-      filterChain.push(this.filterByAccount(accountId));
+    if(!posts) {
+      return;
     }
-    if(month >= 0) {
-      console.log(month)
-      filterChain.push(this.filterByMonth(month))
+
+    if(account !== null) {
+      filterChain.push(this.filterByAccount(account.id));
     }
-    if(year != 0) {
-      filterChain.push(this.filterByYear(year))
-    }
+    // if(month >= 0) {
+    //   console.log(month)
+    //   filterChain.push(this.filterByMonth(month))
+    // }
+    // if(year != 0) {
+    //   filterChain.push(this.filterByYear(year))
+    // }
 
     if(filterChain.length > 0) {
       return this.execFilter(posts, filterChain);

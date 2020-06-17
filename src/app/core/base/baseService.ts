@@ -1,40 +1,42 @@
 import { HttpClient } from '@angular/common/http';
-import { BaseEntity } from './baseEntity';
+import { BaseEntity, BaseContainer } from './baseEntity';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { OnInit } from '@angular/core';
 
-export abstract class BaseService<T extends BaseEntity> implements OnInit {
+export abstract class BaseService<T extends BaseEntity> {
 
   constructor(private httpClient: HttpClient) { }
-  
-  ngOnInit(): void {
-    this.entities$ = this.entities.asObservable();
-  }
 
-  private entities: BehaviorSubject<T[]> = new BehaviorSubject(null);
+  protected entities: BehaviorSubject<T[]> = new BehaviorSubject(null);
   private theEntities: T[];
   protected serverUrl: string;
-  entities$: Observable<T[]>;
+  entities$: Observable<T[]> = this.entities.asObservable();
+  amount: number;
 
-  register(callback: (entities: T[]) => any) {
-    this.entities.subscribe(callback);
+  register(callback: (entities: T[]) => any)  {
+    this.loadAll();
+    this.entities$.subscribe(callback);
   }
 
   add(entity: T) {
     this.httpClient.post<T>(this.serverUrl, entity)
-      .subscribe((entity) => {
+      .subscribe((responseEntity) => {
         if (entity.id) {
-          let index = this.theEntities.findIndex(i => i.id == entity.id);
-          if (index >= 0) {
-            this.theEntities[index] = entity;
-          } else {
-            this.insertNew(this.theEntities, entity);
-          }
+          this.updateExisting(responseEntity);
         } else {
-          this.insertNew(this.theEntities, entity);
+          this.insertNew(this.theEntities, responseEntity);
         }
-        this.entities.next(this.theEntities);
+        this.updateData(this.theEntities);
       });
+  }
+
+  private updateExisting(responseEntity: T) {
+    let index = this.theEntities.findIndex(i => i.id == responseEntity.id);
+    if (index >= 0) {
+      this.theEntities[index] = responseEntity;
+    } else {
+      this.insertNew(this.theEntities, responseEntity);
+    }
   }
 
   delete(id: number) {
@@ -42,20 +44,22 @@ export abstract class BaseService<T extends BaseEntity> implements OnInit {
       .subscribe(() => {
         let index = this.theEntities.findIndex(i => i.id == id);
         this.theEntities.splice(index, 1);
-        this.entities.next(this.theEntities);
+        this.updateData(this.theEntities);
       });
   }
 
   loadAll(): void {
-    if(this.entities.value == null) {
-      console.log("reloaded");
-      
-      this.httpClient.get<T[]>(this.serverUrl)
-        .subscribe(response => {
-          this.theEntities = response;
-          this.entities.next(this.sort(this.theEntities))
-        });
-    } 
+    if (this.entities.value == null) {
+      this.reload();
+    }
+  }
+
+  reload(): void {
+    console.log("reloaded");
+    this.httpClient.get<T[]>(this.serverUrl)
+      .subscribe(response => {
+        this.updateData(this.sort(response));
+      });
   }
 
   protected insertNew(entities: T[], entity: T) {
@@ -66,6 +70,12 @@ export abstract class BaseService<T extends BaseEntity> implements OnInit {
       }
     }
     entities.push(entity);
+  }
+
+  protected updateData(entities: T[]) {
+    this.theEntities = entities;
+    this.entities.next(this.theEntities);
+    this.amount = this.theEntities.length;
   }
 
   protected getHttpClient() {

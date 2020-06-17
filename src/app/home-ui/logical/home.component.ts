@@ -27,9 +27,6 @@ export class HomeComponent implements OnInit {
     this.categoryService.register(categories => this.categories = categories);
     this.accountService.register(accounts => this.accounts = accounts);
     this.postService.register(posts => this.posts = posts);
-    this.categoryService.loadAll();
-    this.accountService.loadAll();
-    this.postService.loadAll();
   }
 
   navigate(dest: string) {

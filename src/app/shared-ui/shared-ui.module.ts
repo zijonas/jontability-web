@@ -20,6 +20,8 @@ import { FormsModule } from '@angular/forms';
 import { NavigationParentComponent } from './presentational/navigation-parent.component';
 import { CardEditorComponent } from './presentational/list-editor/card-editor.component';
 import { CardListComponent } from './presentational/list-editor/card-list.component';
+import { HeaderComponent } from './logical/header/header.component';
+import { StatusPanel } from './presentational/header/status-panel';
 
 
 const materialModules = [
@@ -41,7 +43,9 @@ const materialModules = [
 const sharedComponents = [
   NavigationParentComponent,
   CardEditorComponent,
-  CardListComponent
+  CardListComponent,
+  HeaderComponent,
+  StatusPanel
 ]
 
 const uiModules = [

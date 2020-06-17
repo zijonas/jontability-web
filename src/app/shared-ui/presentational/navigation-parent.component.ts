@@ -3,9 +3,7 @@ import { Component } from '@angular/core';
 @Component({
     template: `
         <mat-toolbar color="primary">
-            <div class="header">
-                <app-header></app-header>
-            </div>
+            <app-header></app-header>
         </mat-toolbar>
         <mat-sidenav-container>
             <mat-sidenav mode="side" opened>

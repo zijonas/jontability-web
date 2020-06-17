@@ -6,7 +6,7 @@
                     Categorias
                 </mat-card-title>
                 <mat-card-subtitle>
-                    Total de categorias: {{categories.length}}
+                    Total de categorias: {{categoryService.amount}}
                 </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
@@ -23,7 +23,7 @@
                     Contas
                 </mat-card-title>
                 <mat-card-subtitle>
-                    Total de contas: {{accounts.length}}
+                    Total de contas: {{accountService.amount}}
                 </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
@@ -50,7 +50,7 @@
                     Lançamentos
                 </mat-card-title>
                 <mat-card-subtitle>
-                    {{posts.length}} feitos neste ano
+                    {{postService.amount}} feitos neste mês
                 </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
