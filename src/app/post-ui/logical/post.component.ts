@@ -1,16 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { Post } from '../../core/model/post';
 import { PostService } from '../../core/services/post.service';
 import { PostSumService } from '../../core/services/post-sum.service';
-import { Category } from '../../core/model/category';
 import { CategoryService } from '../../core/services/category.service';
 import { AccountService } from '../../core/services/account.service';
 import { Account } from '../../core/model/account';
-import { MonthInfo } from '../../core/model/monthInfo';
 import { PostFilterService } from '../../core/filter/post-filter.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
+  encapsulation: ViewEncapsulation.None,
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
@@ -44,7 +43,7 @@ export class PostComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.postSub$.unsubscribe();
   }
-  
+
   init(posts: Post[]) {
     if (posts !== null) {
       this.posts = posts;
@@ -79,7 +78,7 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   setSaldo() {
-    this.saldo = this.postSumService.saldo(this.filteredPosts);
+    this.saldo = this.postSumService.saldo(this.posts);
   }
 
   doFilter() {

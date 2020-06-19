@@ -4,10 +4,14 @@ import { Post } from 'src/app/core/model/post';
 @Component({
     selector: 'post-list',
     template: `
-    <table mat-table [dataSource]="posts" matSort class="mat-elevation-z8">
+    <table mat-table [dataSource]="posts" matSort class="mat-elevation-z8 post-table">
         <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef>Data</th>
             <td mat-cell *matCellDef="let post">{{post.date | date : 'dd.MM.yyyy'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef>Tipo</th>
+            <td mat-cell *matCellDef="let post">{{post.invoice ? 'Entrada' : 'Saída'}}</td>
         </ng-container>
         <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef>Categoria</th>
@@ -39,7 +43,7 @@ import { Post } from 'src/app/core/model/post';
     `
 })
 export class PostList {
-    displayedColumns: string[] = ['date', 'category', 'account', 'description', 'value', 'delete'];
+    displayedColumns: string[] = ['date', 'type', 'category', 'account', 'description', 'value', 'delete'];
 
     @Input()
     posts: Post[];

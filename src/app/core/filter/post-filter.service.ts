@@ -29,7 +29,7 @@ export class PostFilterService {
     if (filterChain.length > 0) {
       return this.execFilter(posts, filterChain);
     } else {
-      return posts;
+      return [...posts];
     }
   }
 
