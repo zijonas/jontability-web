@@ -11,7 +11,7 @@
             </mat-card-header>
             <mat-card-content>
                 <div class="grid">
-                    <div *ngFor="let cat of categories">
+                    <div *ngFor="let cat of categoryService.entities$ | async">
                         {{cat.name}}
                     </div>
                 </div>

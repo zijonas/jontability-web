@@ -8,6 +8,7 @@ import { AccountService } from '../../core/services/account.service';
 import { Account } from '../../core/model/account';
 import { MonthInfo } from '../../core/model/monthInfo';
 import { PostFilterService } from '../../core/filter/post-filter.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-post',
@@ -17,16 +18,13 @@ import { PostFilterService } from '../../core/filter/post-filter.service';
 export class PostComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
   filteredPosts: Post[] = [];
-  categories: Category[] = [];
-  accounts: Account[] = [];
-  existingYears: number[] = [];
 
   selectedAccount: Account = null;
   post: Post = new Post();
   day: number;
   saldo: number;
 
-  private static initialized: boolean = false;
+  private postSub$: Subscription;
 
   constructor(
     private postService: PostService,
@@ -37,18 +35,17 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if(!PostComponent.initialized) {
-      this.categoryService.entities$.subscribe(categories => this.categories = categories);
-      this.accountService.entities$.subscribe(accounts => this.accounts = accounts);
-      this.postService.entities$.subscribe(this.init.bind(this));
-    }
+    this.categoryService.loadAll();
+    this.accountService.loadAll();
+    this.postService.loadAll();
+    this.postSub$ = this.postService.entities$.subscribe(this.init.bind(this));
   }
 
   ngOnDestroy(): void {
+    this.postSub$.unsubscribe();
   }
   
   init(posts: Post[]) {
-    console.log('init');
     if (posts !== null) {
       this.posts = posts;
       this.doFilter();
@@ -67,8 +64,9 @@ export class PostComponent implements OnInit, OnDestroy {
     this.resetPost();
   }
 
-  inputActive() {
-    return this.postService.filter.month !== null && this.postService.filter.year !== null && this.selectedAccount !== null;
+  inputDisabled() {
+    const allSet = !!this.postService.filter.month && !!this.postService.filter.year && !!this.selectedAccount;
+    return !allSet;
   }
 
   resetPost() {
@@ -86,10 +84,6 @@ export class PostComponent implements OnInit, OnDestroy {
 
   doFilter() {
     this.filteredPosts = this.filterService.filter(this.posts, this.selectedAccount);
-    console.log('Filter posts');
-    console.log(this.posts);
-    console.log(this.filteredPosts);
-    
   }
 
   selectAccount(account: Account) {
@@ -98,10 +92,10 @@ export class PostComponent implements OnInit, OnDestroy {
     } else {
       this.selectedAccount = account;
     }
-    console.log(this.selectedAccount)
+    this.doFilter();
   }
 
-  filterChanged(z: string) {
+  filterChanged() {
     this.postService.reload();
   }
 }

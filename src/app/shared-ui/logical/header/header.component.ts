@@ -47,11 +47,12 @@ export class HeaderComponent implements OnInit {
     if (currentUser) {
       this.activeUser = currentUser.username;
     }
+    this.accountService.loadAll();
+    this.categoryService.loadAll();
   }
 
   logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
-
 }

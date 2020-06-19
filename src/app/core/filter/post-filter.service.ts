@@ -18,34 +18,19 @@ export class PostFilterService {
   filter(posts: Post[], account: Account) {
     let filterChain = [];
 
-    if(!posts) {
+    if (!posts) {
       return;
     }
 
-    if(account !== null) {
+    if (!!account) {
       filterChain.push(this.filterByAccount(account.id));
     }
-    // if(month >= 0) {
-    //   console.log(month)
-    //   filterChain.push(this.filterByMonth(month))
-    // }
-    // if(year != 0) {
-    //   filterChain.push(this.filterByYear(year))
-    // }
 
-    if(filterChain.length > 0) {
+    if (filterChain.length > 0) {
       return this.execFilter(posts, filterChain);
     } else {
       return posts;
     }
-  }
-
-  private filterByMonth(month: number) {
-    return (post: Post) => new Date(post.date).getMonth() == month;
-  }
-
-  private filterByYear(year: number) {
-    return (post: Post) => new Date(post.date).getFullYear() == year;
   }
 
   private filterByAccount(accountId: number) {

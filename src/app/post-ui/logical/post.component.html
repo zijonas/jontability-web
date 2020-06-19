@@ -1,36 +1,39 @@
-<h2 class="page-title">Lançamentos para {{postService.filter.month | month}} de {{postService.filter.year}} = {{saldo}}</h2>
-<h3 *ngIf="selectedAccount !== null">Conta: {{selectedAccount.name}}</h3>
+<h2 class="page-title">Lançamentos para {{postService.filter.month | month}} de {{postService.filter.year}} = {{saldo}}
+</h2>
 <div>
   <div class="box">
     <div class="head-box">
-      <mat-form-field>
-        <mat-label>Mês</mat-label>
-        <mat-select [(ngModel)]="postService.filter.month" (selectionChange)="filterChanged()" name="month-filter">
-          <mat-option value="null">Todos</mat-option>
-          <mat-option *ngFor="let month of postService.sumPerMonth" [value]="month.month">{{month.month | month}} |
-            {{month.sum | number : '1.2'}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Ano</mat-label>
-        <mat-select [(ngModel)]="postService.filter.year" (selectionChange)="filterChanged()" name="year-filter">
-          <mat-option value="null">Todos</mat-option>
-          <mat-option *ngFor="let year of postService.years" [value]="year">{{year}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Conta</mat-label>
-        <mat-select (selectionChange)="selectAccount($event.value)" name="account-filter">
-          <mat-option value="null">Todos</mat-option>
-          <mat-option *ngFor="let account of accounts" [value]="account">{{account.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <div class="filter-container">
+        <mat-form-field>
+          <mat-label>Mês</mat-label>
+          <mat-select [(ngModel)]="postService.filter.month" (selectionChange)="filterChanged()" name="month-filter">
+            <mat-option>Todos</mat-option>
+            <mat-option *ngFor="let month of postService.sumPerMonth" [value]="month.month">{{month.month | month}} |
+              {{month.sum | number : '1.2'}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Ano</mat-label>
+          <mat-select [(ngModel)]="postService.filter.year" (selectionChange)="filterChanged()" name="year-filter">
+            <mat-option>Todos</mat-option>
+            <mat-option *ngFor="let year of postService.years" [value]="year">{{year}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Conta</mat-label>
+          <mat-select (selectionChange)="selectAccount($event.value)" name="account-filter">
+            <mat-option>Todos</mat-option>
+            <mat-option *ngFor="let account of accountService.entities$ | async" [value]="account">{{account.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
       <form class="addPostForm" action="#" method="POST">
         <mat-checkbox [(ngModel)]="post.invoice" name="invoice">Entrada</mat-checkbox>
         <mat-form-field>
           <mat-label>Categoria</mat-label>
           <mat-select [(ngModel)]="post.categoryId" name="categorie">
-            <mat-option *ngFor="let c of categories" [value]="c.id">{{c.name}}</mat-option>
+            <mat-option *ngFor="let c of categoryService.entities$ | async" [value]="c.id">{{c.name}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
@@ -43,11 +46,13 @@
         <mat-form-field>
           <input matInput [(ngModel)]="post.value" placeholder="Valor" type="number" name="value" />
         </mat-form-field>
-        <button mat-raised-button color="primary" (click)="add()" value="Add">Gravar</button>
+        <button mat-raised-button color="primary" (click)="add()" [disabled]="inputDisabled()"
+          value="Add">Gravar</button>
       </form>
     </div>
     <div class="middle-box">
-      <post-list [posts]="filteredPosts" (deletePost)='postService.delete($event)' (selectPost)='select($event)'></post-list>
+      <post-list [(posts)]="filteredPosts" (deletePost)='postService.delete($event)' (selectPost)='select($event)'>
+      </post-list>
     </div>
   </div>
 </div>

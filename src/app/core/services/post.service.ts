@@ -31,6 +31,12 @@ export class PostService extends BaseService<Post> {
     this.getHttpClient().post<Post[]>(`${this.serverUrl}/fetch`, this.filter)
     .subscribe(response => this.updateData(this.sort(response)));
   }
+  
+  reloadWithSums() {
+    this.reload();
+    this.reloadSumPerMonth()
+    this.reloadYears();
+  }
 
   reloadYears() {
     this.getHttpClient().get<number[]>(`${this.serverUrl}/years`)
