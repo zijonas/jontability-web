@@ -16,7 +16,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 
 import { CoreModule } from '../core/core.module';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavigationParentComponent } from './presentational/navigation-parent.component';
 import { CardEditorComponent } from './presentational/list-editor/card-editor.component';
 import { CardListComponent } from './presentational/list-editor/card-list.component';
@@ -52,7 +52,8 @@ const uiModules = [
   CommonModule,
   CoreModule,
   RouterModule,
-  FormsModule
+  FormsModule,
+  ReactiveFormsModule
 ]
 
 

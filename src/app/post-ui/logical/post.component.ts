@@ -7,6 +7,7 @@ import { AccountService } from '../../core/services/account.service';
 import { Account } from '../../core/model/account';
 import { PostFilterService } from '../../core/filter/post-filter.service';
 import { Subscription } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -22,6 +23,15 @@ export class PostComponent implements OnInit, OnDestroy {
   post: Post = new Post();
   day: number;
   saldo: number;
+
+  addPostForm = new FormGroup({
+    isInvoice: new FormControl(''),
+    dayOfMonth: new FormControl('', [Validators.required]),
+    category: new FormControl('', [Validators.required]),
+    description: new FormControl(''),
+    account: new FormControl('', [Validators.required]),
+    value: new FormControl('', [Validators.required])
+  });
 
   private postSub$: Subscription;
 
@@ -56,9 +66,12 @@ export class PostComponent implements OnInit, OnDestroy {
 
   add() {
     this.post.date = new Date();
-    this.post.date.setDate(this.day);
+    this.post.date.setDate(this.addPostForm.value.dayOfMonth);
     this.post.date.setMonth(this.postService.filter.month);
-    this.post.accountId = this.selectedAccount.id
+    this.post.accountId = this.addPostForm.value.account.id;
+    this.post.value = this.addPostForm.value.value;
+    this.post.description = this.addPostForm.value.description;
+    this.post.categoryId = this.addPostForm.value.category;
     this.postService.add(this.post);
     this.resetPost();
   }

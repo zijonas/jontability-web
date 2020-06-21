@@ -19,34 +19,35 @@
             <mat-option *ngFor="let year of postService.years" [value]="year">{{year}}</mat-option>
           </mat-select>
         </mat-form-field>
+      </div>
+      <form class="addPostForm" [formGroup]="addPostForm" (ngSubmit)="add()">
+        <mat-checkbox formControlName="isInvoice" name="invoice">Entrada</mat-checkbox>
+        <mat-form-field>
+          <mat-label>Categoria</mat-label>
+          <mat-select required formControlName="category" name="categorie">
+            <mat-option *ngFor="let c of categoryService.entities$ | async" [value]="c.id">{{c.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-form-field>
           <mat-label>Conta</mat-label>
-          <mat-select (selectionChange)="selectAccount($event.value)" name="account-filter">
+          <mat-select required formControlName="account" (selectionChange)="selectAccount($event.value)"
+            name="account-filter">
             <mat-option>Todos</mat-option>
             <mat-option *ngFor="let account of accountService.entities$ | async" [value]="account">{{account.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-      </div>
-      <form class="addPostForm" action="#" method="POST">
-        <mat-checkbox [(ngModel)]="post.invoice" name="invoice">Entrada</mat-checkbox>
-        <mat-form-field>
-          <mat-label>Categoria</mat-label>
-          <mat-select required [(ngModel)]="post.categoryId" name="categorie">
-            <mat-option *ngFor="let c of categoryService.entities$ | async" [value]="c.id">{{c.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
         <mat-form-field>
           <mat-label>Observação</mat-label>
-          <input matInput [(ngModel)]="post.description" type="text" placeholder="Ex: Caneta azul" name="description" />
+          <input matInput formControlName="description" type="text" placeholder="Ex: Caneta azul" name="description" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput required [(ngModel)]="day" placeholder="Dia do mês" type="number" name="day" />
+          <input matInput required formControlName="dayOfMonth" placeholder="Dia do mês" type="number" name="day" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput required [(ngModel)]="post.value" placeholder="Valor" type="number" name="value" />
+          <input matInput required formControlName="value" placeholder="Valor" type="number" name="value" />
         </mat-form-field>
-        <button mat-raised-button color="primary" (click)="add()" [disabled]="inputDisabled()"
+        <button mat-raised-button color="primary" type="submit" [disabled]="!addPostForm.valid"
           value="Add">Gravar</button>
       </form>
     </div>
