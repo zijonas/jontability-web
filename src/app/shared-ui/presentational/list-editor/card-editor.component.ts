@@ -5,14 +5,14 @@ import { BaseEntity } from 'src/app/core/base/baseEntity';
     selector: 'card-editor',
     template: `
         <div class="head-box">
-            <button mat-raised-button color="accent" (click)="clear.emit()" value="add">Limpar</button>
-            <button mat-raised-button color="warn" (click)="delete.emit()" value="delete">Remover</button>
             <form class="addPostForm" action="#" method="POST">
                 <mat-form-field>
                     <mat-label>Nome</mat-label>
                     <input matInput [(ngModel)]="entity.name" type="text" placeholder="Ex: Entrada" name="name" />
                 </mat-form-field>
                 <button mat-raised-button color="primary" (click)="add.emit()" value="Add">Gravar</button>
+                <button mat-raised-button color="accent" (click)="clear.emit()" value="add">Limpar</button>
+                <button mat-raised-button color="warn" (click)="delete.emit()" value="delete">Remover</button>
             </form>
         </div>
     `

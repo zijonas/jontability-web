@@ -1,4 +1,4 @@
-<h2 class="page-title">Lançamentos para {{postService.filter.month | month}} de {{postService.filter.year}} = {{saldo}}
+<h2 class="page-title">Lançamentos para <span *ngIf="postService.filter.month">{{postService.filter.month | month}} de </span>{{postService.filter.year}} = {{saldo | number : '1.2'}}
 </h2>
 <div>
   <div class="box">

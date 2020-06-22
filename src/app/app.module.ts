@@ -7,9 +7,6 @@ import { JwtInterceptor } from './core/security/jwt.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { SharedUiModule } from './shared-ui/shared-ui.module';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -21,10 +18,7 @@ import { MatSortModule } from '@angular/material/sort';
     AppRoutingModule,
     HttpClientModule,
     CoreModule,
-    SharedUiModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule
+    SharedUiModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

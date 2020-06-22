@@ -22,9 +22,13 @@ import { CardEditorComponent } from './presentational/list-editor/card-editor.co
 import { CardListComponent } from './presentational/list-editor/card-list.component';
 import { HeaderComponent } from './logical/header/header.component';
 import { StatusPanel } from './presentational/header/status-panel';
+import { MatListModule } from '@angular/material/list';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { LayoutModule } from '@angular/cdk/layout';
 
 
 const materialModules = [
+  LayoutModule,
   MatCheckboxModule,
   MatFormFieldModule,
   MatToolbarModule,
@@ -37,7 +41,9 @@ const materialModules = [
   MatButtonToggleModule,
   MatCardModule,
   MatIconModule,
-  MatGridListModule
+  MatGridListModule,
+  MatListModule,
+  MatPaginatorModule
 ];
 
 const sharedComponents = [
@@ -55,8 +61,6 @@ const uiModules = [
   FormsModule,
   ReactiveFormsModule
 ]
-
-
 
 @NgModule({
   declarations: [

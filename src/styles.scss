@@ -63,3 +63,39 @@ app-header, .header {
         margin-left: auto;
     }
 }
+
+.filter-container, .addPostForm {
+    justify-content: center;
+    display: flex;
+
+    &.addPostForm {
+        align-items: center;
+    }
+
+    > * {
+        margin-right: 10px;
+    }
+}
+
+
+.post-table {
+    width: 100%;
+}
+
+.sidenav-container {
+    height: 100%;
+  }
+  
+  .sidenav {
+    width: 200px;
+  }
+  
+  .sidenav .mat-toolbar {
+    background: inherit;
+  }
+  
+  .mat-toolbar.mat-primary {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
