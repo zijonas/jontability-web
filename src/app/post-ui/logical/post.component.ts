@@ -31,6 +31,8 @@ export class PostComponent implements OnInit, OnDestroy {
     description: new FormControl(''),
     account: new FormControl('', [Validators.required]),
     value: new FormControl('', [Validators.required])
+  }, {
+    updateOn: "blur"
   });
 
   private postSub$: Subscription;
@@ -47,6 +49,7 @@ export class PostComponent implements OnInit, OnDestroy {
     this.categoryService.loadAll();
     this.accountService.loadAll();
     this.postService.loadAll();
+    this.addPostForm.valueChanges.subscribe(() => console.log("changes"));
     this.postSub$ = this.postService.entities$.subscribe(this.init.bind(this));
   }
 
