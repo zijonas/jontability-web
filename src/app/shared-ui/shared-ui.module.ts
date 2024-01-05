@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCheckboxModule } from '@angular/material/checkbox'
-import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox'
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field'
 import { MatToolbarModule } from '@angular/material/toolbar'
-import { MatButtonModule } from '@angular/material/button'
-import { MatInputModule } from '@angular/material/input'
-import { MatSelectModule } from '@angular/material/select';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button'
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input'
+import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
+import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCardModule } from '@angular/material/card';
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 
@@ -22,8 +22,8 @@ import { CardEditorComponent } from './presentational/list-editor/card-editor.co
 import { CardListComponent } from './presentational/list-editor/card-list.component';
 import { HeaderComponent } from './logical/header/header.component';
 import { StatusPanel } from './presentational/header/status-panel';
-import { MatListModule } from '@angular/material/list';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
+import { MatLegacyPaginatorModule as MatPaginatorModule } from '@angular/material/legacy-paginator';
 import { LayoutModule } from '@angular/cdk/layout';
 
 
