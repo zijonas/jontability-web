@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "jontability-web:build"
+            "buildTarget": "jontability-web:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "jontability-web:build:production"
+              "buildTarget": "jontability-web:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "jontability-web:build"
+            "buildTarget": "jontability-web:build"
           }
         },
         "test": {
