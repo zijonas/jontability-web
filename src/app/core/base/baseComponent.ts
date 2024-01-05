@@ -1,10 +1,11 @@
+import { Injectable, OnInit } from '@angular/core';
 import { BaseEntity } from './baseEntity';
 import { BaseService } from './baseService';
-import { OnInit } from '@angular/core';
 
-export class BaseComponent<T extends BaseEntity> implements OnInit {
+@Injectable()
+export abstract class BaseComponent<T extends BaseEntity> implements OnInit {
 
-    constructor(private service: BaseService<T>, private type: new () => T) { }
+    constructor(private service: BaseService<T>, private type: { new ():  T}) { }
 
     entity: T = new this.type();
     entities: T[];

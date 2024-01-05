@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
   `,
 })
 export class DashboardComponent implements AfterViewInit {
-  @ViewChild('myChart', null)
+  @ViewChild('myChart')
   myChart: ElementRef;
   chart: ECharts.ECharts = null;
   posts: Post[];

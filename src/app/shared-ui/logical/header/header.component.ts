@@ -11,7 +11,7 @@ import { CategoryService } from 'src/app/core/services/category.service';
       <div class="header">
         <div class="left">
           <nav>
-              <a routerLink="/home">
+              <a routerLink="/home" [routerLinkActive]="{}">
                   <div class="title">
                       {{title}}
                   </div>
@@ -35,8 +35,8 @@ export class HeaderComponent implements OnInit {
   constructor(private appComponent: AppComponent,
     private authenticationService: AuthenticationService,
     private router: Router,
-    private accountService: AccountService,
-    private categoryService: CategoryService) {
+    public accountService: AccountService,
+    public categoryService: CategoryService) {
     }
 
   title = this.appComponent.title;

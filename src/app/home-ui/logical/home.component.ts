@@ -12,9 +12,9 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private categoryService: CategoryService,
-    private accountService: AccountService,
-    private postService: PostService) { }
+    public categoryService: CategoryService,
+    public accountService: AccountService,
+    public postService: PostService) { }
 
   ngOnInit(): void {
     this.categoryService.loadAll();

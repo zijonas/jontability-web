@@ -67,7 +67,8 @@ const uiModules = [
     ...sharedComponents
   ],
   imports: [
-    ...uiModules
+    ...uiModules,
+    ...materialModules
   ],
   exports: [
     ...materialModules,

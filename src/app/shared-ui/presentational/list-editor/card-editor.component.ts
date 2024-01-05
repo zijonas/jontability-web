@@ -19,7 +19,7 @@ import { BaseEntity } from 'src/app/core/base/baseEntity';
 })
 export class CardEditorComponent {
     @Input()
-    entity: BaseEntity;
+    entity: any;
 
     @Output()
     add: EventEmitter<any> = new EventEmitter();

@@ -38,10 +38,10 @@ export class PostComponent implements OnInit, OnDestroy {
   private postSub$: Subscription;
 
   constructor(
-    private postService: PostService,
+    public postService: PostService,
     private postSumService: PostSumService,
-    private categoryService: CategoryService,
-    private accountService: AccountService,
+    public categoryService: CategoryService,
+    public accountService: AccountService,
     private filterService: PostFilterService) {
   }
 
@@ -69,12 +69,12 @@ export class PostComponent implements OnInit, OnDestroy {
 
   add() {
     this.post.date = new Date();
-    this.post.date.setDate(this.addPostForm.value.dayOfMonth);
+    this.post.date.setDate(Number(this.addPostForm.value.dayOfMonth));
     this.post.date.setMonth(this.postService.filter.month);
-    this.post.accountId = this.addPostForm.value.account.id;
-    this.post.value = this.addPostForm.value.value;
+    this.post.accountId = (this.addPostForm.value.account as any).id;
+    this.post.value = Number(this.addPostForm.value.value);
     this.post.description = this.addPostForm.value.description;
-    this.post.categoryId = this.addPostForm.value.category;
+    this.post.categoryId = Number(this.addPostForm.value.category);
     this.postService.add(this.post);
     this.resetPost();
   }
