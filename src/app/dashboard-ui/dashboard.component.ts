@@ -1,10 +1,11 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import * as ECharts from 'echarts';
 import { PostService } from '../core/services/post.service';
 import { Post } from '../core/model/post';
 import { Account } from '../core/model/account';
 import { AccountService } from '../core/services/account.service';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,15 +13,22 @@ import { ActivatedRoute } from '@angular/router';
       <div #myChart style="width: 100%;"></div>
   `,
 })
-export class DashboardComponent implements AfterViewInit {
+export class DashboardComponent implements AfterViewInit, OnDestroy {
   @ViewChild('myChart')
   myChart: ElementRef;
+
   chart: ECharts.ECharts = null;
   posts: Post[];
   accounts: Account[];
-  height = '600px';
 
-  constructor(private postService: PostService, private accountService: AccountService, private route: ActivatedRoute) {
+  height = '600px';
+  accountSubsription$: Subscription;
+  postSubscription$: Subscription;
+
+  constructor(
+    private postService: PostService,
+    private accountService: AccountService,
+    private route: ActivatedRoute) {
     route.queryParamMap.subscribe(params => {
       if (params.has('height')) {
         this.height = params.get('height');
@@ -30,16 +38,24 @@ export class DashboardComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.myChart.nativeElement.style.height = this.height;
-    this.accountService.register(accounts => {
+    this.chart = ECharts.init(this.myChart.nativeElement, 'dark');
+    this.accountSubsription$ = this.accountService.register(accounts => {
       this.accounts = accounts;
-      this.postService.register(posts => {
-        this.posts = posts;
-        this.chart = ECharts.init(this.myChart.nativeElement, 'dark');
+      if (!!this.accounts && !!this.posts) {
         this.chart.setOption(this.createOptions());
-      });
+      }
     });
-    this.accountService.loadAll(); 
-    this.accountService.loadAll(); 
+    this.postSubscription$ = this.postService.register(posts => {
+      this.posts = posts;
+      if (!!this.accounts && !!this.posts) {
+        this.chart.setOption(this.createOptions());
+      }
+    });
+  }
+  
+  ngOnDestroy(): void {
+    this.accountSubsription$.unsubscribe;
+    this.postSubscription$.unsubscribe;
   }
 
   getBarOptions() {

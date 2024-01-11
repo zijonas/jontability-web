@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { BaseEntity, BaseContainer } from './baseEntity';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { OnInit } from '@angular/core';
 
 export abstract class BaseService<T extends BaseEntity> {
@@ -13,9 +13,9 @@ export abstract class BaseService<T extends BaseEntity> {
   entities$: Observable<T[]> = this.entities.asObservable();
   amount: number;
 
-  register(callback: (entities: T[]) => any)  {
+  register(callback: (entities: T[]) => any): Subscription  {
     this.loadAll();
-    this.entities$.subscribe(callback);
+    return this.entities$.subscribe(callback);
   }
 
   add(entity: T) {
